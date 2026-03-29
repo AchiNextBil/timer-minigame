@@ -1,0 +1,4 @@
+<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M10 16.364A6.344 6.344 0 0 1 5.5 14.5L10 10V3.636a6.364 6.364 0 0 1 0 12.728z" fill="#CAAB72"/>
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M20 10c0 5.523-4.477 10-10 10S0 15.523 0 10 4.477 0 10 0s10 4.477 10 10zm-1.818 0a8.182 8.182 0 1 1-16.364 0 8.182 8.182 0 0 1 16.364 0z" fill="#CAAB72"/>
+</svg>

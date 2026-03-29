@@ -1,0 +1,149 @@
+
+.currentSponsorsSection{
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    align-items: center;
+    background-color: var(--white);
+    color: var(--dark-blue);
+    padding: 40px;
+}
+
+.currentSponsor:hover .currentSponsorImage{
+    scale:1.1;
+    cursor: pointer;
+}
+
+.currentSponsor{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+.currentSponsorImage{
+    margin-bottom: 24px;
+    height: 56px;
+    transition: all 0.2s ease-in-out;
+    place-self: center;
+}
+
+.currentSponsorText1{
+    font-weight: 700;
+    margin-bottom: 8px;
+    font-size: 14px;
+}
+
+.currentSponsorText2{
+    font-weight: 400;
+    font-size: 12px;
+}
+
+
+.previousSponsorsSection{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 0;
+
+}
+
+.previousSponsor{
+    display: flex;
+    gap: 13px;
+    align-items: center;
+}
+
+.previousSponsor img{
+    height: 40px;
+    width: 40px;
+}
+
+.previousSponsorTexts{
+    display: flex;
+    flex-direction: column;
+    font-size: 12px;
+    color: var(--blue-50);
+    gap: 2px;
+}
+
+.previousSponsorsList{
+    display: flex;
+    gap: 24px;
+}
+
+
+.previousSponsorsSection h2{
+    font-size: 16px;
+    color: var(--blue-40);
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+
+.disclaimer {
+  background-color: var(--dark-blue);
+  padding: 40px;
+  color: var(--blue-50);
+  line-height: 18px;
+  font-size: 12px;
+}
+
+.responsibleGaming{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 24px;
+}
+
+.responsibleGamingIcons{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.responsibleGamingIcons img{
+    height: 30px;
+}
+
+.responsibleGaming,
+.previousSponsorsList,
+.cookieNotice {
+    max-width:var(--container-max-width);
+    margin:auto
+}
+
+.sponsorsWrapper{
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+    gap: 30px;
+}
+
+
+
+@media screen and (max-width: 1024px) {
+    .previousSponsor{
+        flex-direction: column;
+        text-align: center;
+    }
+}
+
+
+
+@media screen and (max-width: 767px) {
+
+       .sponsorText{
+        display: none;
+    }
+
+    .sponsorsWrapper{
+        flex-direction: column;
+    }
+
+    .previousSponsorsList {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+
+}

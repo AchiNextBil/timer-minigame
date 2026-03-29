@@ -1,0 +1,96 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+    Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  background-color: var(--blue-100);
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+  border: none;
+  background: none;
+  outline: none;
+}
+
+button {
+  cursor: pointer;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+:root {
+  --base20: #d3d4d7;
+  --gold-100: #CAAB72;
+  --gold-200: #e6b800;
+  --blue-40: #A7A9B0;
+  --white: #ffffff;
+  --dark-blue: #1A202C;
+  --blue-100: #222939;
+  --blue-80: #4E5461;
+  --blue-90: #383E4D;
+  --blue-50: #90949C;
+  --white: #fff;
+  --gunmetal: #4e5461;
+  --charcoal-grey:#383e4d;
+
+;
+
+    --container-max-width: 1300px;
+
+
+}
+
+
+.desktop {
+  display: none;
+}
+
+.tablet {
+  display: block;
+}
+
+@media (min-width: 1121px) {
+  .desktop {
+    display: block;
+  }
+
+  .tablet {
+    display: none;
+  }
+}
