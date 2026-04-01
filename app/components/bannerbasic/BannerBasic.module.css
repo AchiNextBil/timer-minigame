@@ -40,7 +40,8 @@
   padding-top: 0px;
   padding-bottom: 20px;
   background-image:
-    linear-gradient(rgba(33, 41, 59, 1), rgba(35, 41, 57, 0.9)), url('/achi/timer/game-banner.jpg');
+    /* linear-gradient(rgba(33, 41, 59, 1), rgba(35, 41, 57, 0.9)), url('/achi/timer/game-banner.jpg'); */
+    linear-gradient(rgba(33, 41, 59, 1), rgba(35, 41, 57, 0.9)), url('/game-banner.jpg');
 
   background-size: cover;
   background-position: center;
@@ -225,7 +226,7 @@
   outline: none;
 }
 
-.submitButton {
+.startButton {
   width: 100%;
   display: flex;
   align-items: center;
@@ -258,6 +259,35 @@
   font-weight: 700;
   font-size: 20px;
   letter-spacing: 0px;
+}
+
+
+.submitButton {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+
+  padding: 14px 0px;
+  margin-top: 20px;
+
+  border-radius: 16px;
+  border: none;
+  cursor: pointer;
+
+  /* gold gradient */
+  background: linear-gradient(to right, #ca7272, #923434);
+
+  /* subtle depth */
+  /* box-shadow: 0 6px 16px rgba(197, 166, 108, 0.395); */
+  box-shadow:
+    0 4px 12px rgba(56, 56, 56, 0.35),
+    /* depth */ 0 0 10px rgba(202, 114, 114, 0.25),
+    /* soft gold glow */ 0 0 20px rgba(202, 114, 114, 0.15); /* outer halo */
+
+  position: relative;
+  overflow: hidden;
 }
 
 .card2 {
@@ -305,4 +335,16 @@
 
 .gameRulesTitle2 span {
   font-weight: 900;
+}
+
+.errorText {
+    color: #ff4d4f;
+    font-size: 12px;
+    margin: 0px 0 0 18px;
+}
+
+.checkingText {
+    color: #ffc74d;
+    font-size: 12px;
+    margin: 0px 0 0 18px;
 }
