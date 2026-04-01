@@ -32,19 +32,19 @@ const formatTime = (t: number): string => {
   const secs = Math.floor(totalMs / 1000);
   const ms = totalMs % 1000;
 
-  return `${secs}.${ms.toString().padStart(3, '0')}`;
+  return `${secs}:${ms.toString().padStart(3, '0')}`;
 };
 
-const formatDate = (d: Date): string => {
-  return new Intl.DateTimeFormat('zh-CN', {
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-  })
-    .format(d)
-    .replace(/\//g, ' 年')
-    .replace(/(\d{2})$/, ' $1日');
-};
+// const formatDate = (d: Date): string => {
+//   return new Intl.DateTimeFormat('zh-CN', {
+//     year: 'numeric',
+//     month: '2-digit',
+//     day: '2-digit',
+//   })
+//     .format(d)
+//     .replace(/\//g, ' 年')
+//     .replace(/(\d{2})$/, ' $1日');
+// };
 
 const BannerBasic = () => {
   const [loading, setLoading] = useState(false);
@@ -105,7 +105,7 @@ const BannerBasic = () => {
     intervalRef.current = setInterval(() => {
       const elapsed = (Date.now() - start) / 1000;
       setTime(elapsed);
-    }, 50);
+    }, 99);
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -224,7 +224,10 @@ const BannerBasic = () => {
                 {errors.username && <span className={styles.errorText}>{errors.username}</span>}
                 {errorMsg && <span className={styles.errorText}>{errorMsg}</span>}
                 {checkingAllowence && (
-                  <span className={styles.checkingText}>checkingAllowence</span>
+                  <span className={styles.checkingText}>checkingAllowence...</span>
+                )}
+                {allowedToPlay === false && (
+                  <span className={styles.errorText}>you already played today</span>
                 )}
               </div>
               {time === 0 && (
@@ -232,7 +235,9 @@ const BannerBasic = () => {
                   type="button"
                   onClick={startTimer}
                   className={styles.startButton}
-                  disabled={!username?.trim() || checkingAllowence || time > 0}
+                  disabled={
+                    allowedToPlay === false || !username?.trim() || checkingAllowence || time > 0
+                  }
                 >
                   <Play size={21} fill="#ffffff" stroke="none" />
                   <p className={styles.submitText}>START TIMER</p>

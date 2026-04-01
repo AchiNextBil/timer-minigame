@@ -40,8 +40,8 @@
   padding-top: 0px;
   padding-bottom: 20px;
   background-image:
-    /* linear-gradient(rgba(33, 41, 59, 1), rgba(35, 41, 57, 0.9)), url('/achi/timer/game-banner.jpg'); */
-    linear-gradient(rgba(33, 41, 59, 1), rgba(35, 41, 57, 0.9)), url('/game-banner.jpg');
+    linear-gradient(rgba(33, 41, 59, 1), rgba(35, 41, 57, 0.9)), url('/achi/timer/game-banner.jpg');
+  /* linear-gradient(rgba(33, 41, 59, 1), rgba(35, 41, 57, 0.9)), url('/game-banner.jpg'); */
 
   background-size: cover;
   background-position: center;
@@ -261,7 +261,6 @@
   letter-spacing: 0px;
 }
 
-
 .submitButton {
   width: 100%;
   display: flex;
@@ -338,13 +337,13 @@
 }
 
 .errorText {
-    color: #ff4d4f;
-    font-size: 12px;
-    margin: 0px 0 0 18px;
+  color: #ff4d4f;
+  font-size: 12px;
+  margin: 0px 0 0 18px;
 }
 
 .checkingText {
-    color: #ffc74d;
-    font-size: 12px;
-    margin: 0px 0 0 18px;
+  color: #ffc74d;
+  font-size: 12px;
+  margin: 0px 0 0 18px;
 }
