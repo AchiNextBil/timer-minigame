@@ -1,6 +1,6 @@
-"use client";
-import React, { useState, useRef, useEffect } from "react";
-import styles from "./Accordion.module.css";
+'use client';
+import React, { useState, useRef, useEffect } from 'react';
+import styles from './Accordion.module.css';
 
 interface AccordionProps {
   title: string;
@@ -9,7 +9,7 @@ interface AccordionProps {
 
 const Accordion: React.FC<AccordionProps> = ({ title, children = null }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [maxHeight, setMaxHeight] = useState<string>("0px");
+  const [maxHeight, setMaxHeight] = useState<string>('0px');
   const contentRef = useRef<HTMLDivElement>(null);
 
   const toggleAccordion = () => setIsOpen((prev) => !prev);
@@ -19,7 +19,7 @@ const Accordion: React.FC<AccordionProps> = ({ title, children = null }) => {
       if (isOpen) {
         setMaxHeight(`${contentRef.current.scrollHeight}px`);
       } else {
-        setMaxHeight("0px");
+        setMaxHeight('0px');
       }
     }
   }, [isOpen]);
@@ -28,16 +28,9 @@ const Accordion: React.FC<AccordionProps> = ({ title, children = null }) => {
     <div className={`${styles.container} ${isOpen && styles.isOpen}`}>
       <div className={styles.header} onClick={toggleAccordion}>
         <h3 className={styles.title}>{title}</h3>
-        <img
-          src="svg/arrow-icon-down.svg"
-          className={`${isOpen && styles.icon}`}
-        />
+        <img src="svg/arrow-icon-down.svg" className={`${isOpen && styles.icon}`} />
       </div>
-      <div
-        ref={contentRef}
-        className={styles.contentWrapper}
-        style={{ maxHeight }}
-      >
+      <div ref={contentRef} className={styles.contentWrapper} style={{ maxHeight }}>
         <div className={styles.content}>{children}</div>
       </div>
     </div>

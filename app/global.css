@@ -13,8 +13,9 @@ body {
   scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
-    Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-family:
+    -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans',
+    'Helvetica Neue', sans-serif;
   font-size: 16px;
   line-height: 1.5;
   background-color: var(--blue-100);
@@ -56,26 +57,21 @@ ol {
 
 :root {
   --base20: #d3d4d7;
-  --gold-100: #CAAB72;
+  --gold-100: #caab72;
   --gold-200: #e6b800;
-  --blue-40: #A7A9B0;
+  --blue-40: #a7a9b0;
   --white: #ffffff;
-  --dark-blue: #1A202C;
+  --dark-blue: #1a202c;
   --blue-100: #222939;
-  --blue-80: #4E5461;
-  --blue-90: #383E4D;
-  --blue-50: #90949C;
+  --blue-80: #4e5461;
+  --blue-90: #383e4d;
+  --blue-50: #90949c;
   --white: #fff;
   --gunmetal: #4e5461;
-  --charcoal-grey:#383e4d;
+  --charcoal-grey: #383e4d;
 
-;
-
-    --container-max-width: 1300px;
-
-
+  --container-max-width: 1300px;
 }
-
 
 .desktop {
   display: none;

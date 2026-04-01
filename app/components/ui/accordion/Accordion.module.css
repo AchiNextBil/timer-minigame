@@ -6,7 +6,6 @@
   padding: 45px 0;
   margin: auto;
   max-width: var(--container-max-width);
-
 }
 
 .header {
@@ -18,12 +17,11 @@
   padding: 20px 16px;
   color: var(--white);
   background-color: var(--charcoal-grey);
- 
 }
 
-.isOpen .header{
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
+.isOpen .header {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
 }
 
 .title {
@@ -33,11 +31,10 @@
   text-transform: uppercase;
 }
 
-.icon{
-    transform: rotate(-180deg);
-    opacity: 0.5;
+.icon {
+  transform: rotate(-180deg);
+  opacity: 0.5;
 }
-
 
 .contentWrapper {
   overflow: hidden;
@@ -51,16 +48,14 @@
   padding-left: 10px;
 }
 
-
 @media (max-width: 1024px) {
-  .container{
+  .container {
     max-width: calc(100% - 40px);
   }
 }
 
-
 @media (max-width: 768px) {
-    .container{
+  .container {
     max-width: calc(100% - 30px);
   }
 }

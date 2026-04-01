@@ -13,6 +13,9 @@ const eslintConfig = [
   ...compat.extends('next/core-web-vitals', 'next/typescript', 'plugin:prettier/recommended'),
   {
     ignores: ['node_modules/**', '.next/**', 'out/**', 'build/**', 'next-env.d.ts'],
+    rules: {
+      'react/no-unescaped-entities': 'off',
+    },
   },
 ];
 

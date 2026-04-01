@@ -48,7 +48,7 @@ body {
 body {
   background: #222939;
   color: #fff;
-  font-family: "Lato";
+  font-family: 'Lato';
   font-size: 14px;
   line-height: 24px;
   -webkit-box-sizing: border-box;
@@ -57,7 +57,7 @@ body {
 a {
   /* text-decoration: none; */
 }
-a[role="button"] {
+a[role='button'] {
   cursor: pointer;
 }
 a:active,
@@ -102,7 +102,7 @@ li {
   padding-left: 8px;
 }
 ol > li:before {
-  content: counters(item, ".") ". ";
+  content: counters(item, '.') '. ';
   counter-increment: item;
   margin-right: 2px;
   /* position: absolute;
@@ -199,7 +199,7 @@ h5,
 h6,
 strong,
 th {
-  font-family: "Lato";
+  font-family: 'Lato';
   margin: 0;
 }
 h4.heading {
@@ -230,7 +230,7 @@ p {
   display: inline-block;
   vertical-align: middle;
   color: #222939;
-  font-family: "Lato";
+  font-family: 'Lato';
   text-align: center;
   text-decoration: none;
   border: 0;
@@ -257,7 +257,7 @@ p {
   height: 100%;
 }
 #header > .inner-box:after {
-  content: "";
+  content: '';
   display: none;
   position: absolute;
   left: 0;
@@ -282,8 +282,7 @@ p {
   padding: 0 72px;
 }
 
-
-.new_logo{
+.new_logo {
   background-color: red;
   height: 100px;
   width: 250px;
@@ -381,7 +380,7 @@ p {
   display: none;
   margin-left: 24px;
 }
-body[data-lang="cn"] .header__langs {
+body[data-lang='cn'] .header__langs {
   display: none;
 }
 picture {
@@ -569,7 +568,7 @@ picture {
   align-items: center;
   border-radius: 8px;
   background-color: #383e4d;
-  font-family: "Lato";
+  font-family: 'Lato';
   font-size: 14px;
   padding-left: 16px;
   /* justify-content: center */
@@ -604,7 +603,7 @@ picture {
   color: #fff;
   font-size: 14px;
   padding: 16px 0;
-  font-family: "Lato";
+  font-family: 'Lato';
   border-radius: 0px 0px 8px 8px;
 }
 .area-tnc .accordion-content a {
@@ -670,7 +669,7 @@ picture {
   vertical-align: middle;
   text-align: center;
   font-size: 14px;
-  font-family: "Lato";
+  font-family: 'Lato';
 }
 .promo-timer .countdown .num-row {
   display: -webkit-inline-box;
@@ -696,7 +695,7 @@ picture {
   position: relative;
 }
 .promo-timer .countdown .num-col:not(:last-child) .num-holder:after {
-  content: ":";
+  content: ':';
   display: inline;
 }
 .promo-timer .countdown .num-bg {
@@ -725,7 +724,7 @@ picture {
   /* background-color: #1a2332; */
   text-align: left;
   padding: 0 19px;
-  font-family: "Lato";
+  font-family: 'Lato';
   display: block;
 }
 .ledger caption > .row {
@@ -762,7 +761,7 @@ picture {
   padding: 0 8.5px;
 }
 .ledger caption > .row > .col-1 > .row .col:not(:last-child):after {
-  content: "";
+  content: '';
   display: block;
   position: absolute;
   right: 0;
@@ -775,7 +774,7 @@ picture {
   background-color: #b5b5b5;
 }
 .ledger caption > .row > .col-1 > .row .col-1 {
-  font-family: "Lato";
+  font-family: 'Lato';
   font-size: 24px;
   font-weight: bold;
   text-align: center;
@@ -785,7 +784,7 @@ picture {
 }
 
 .loi-krathong {
-  font-family: "Lato";
+  font-family: 'Lato';
   /* font-size: 20px; */
   font-size: 18px;
   /* font-weight: bold; */
@@ -794,7 +793,7 @@ picture {
 }
 
 .ledger caption > .row > .col-2 {
-  font-family: "Lato";
+  font-family: 'Lato';
   font-size: 16px;
 }
 .ledger thead {
@@ -827,7 +826,7 @@ picture {
   /* line-height: 56px; */
 }
 .ledger thead th:not(:last-child) span:after {
-  content: "";
+  content: '';
   display: block;
   position: absolute;
   right: 0;
@@ -881,11 +880,11 @@ picture {
 .ledger tbody tr td.rank .num {
   display: inline-block;
   position: relative;
-  font-family: "Lato";
+  font-family: 'Lato';
   font-size: 24px;
 }
 .ledger tbody tr td.rank .num:before {
-  content: "";
+  content: '';
   position: absolute;
   left: -8px;
   top: 50%;
@@ -897,20 +896,8 @@ picture {
   height: 24px;
 }
 .ledger tbody tr td.rank .num.first {
-  background: -o-linear-gradient(
-    287deg,
-    #d4a01a 12%,
-    #efbb34 51%,
-    #d4a01a 76%,
-    #efbb34 96%
-  );
-  background: linear-gradient(
-    163deg,
-    #d4a01a 12%,
-    #efbb34 51%,
-    #d4a01a 76%,
-    #efbb34 96%
-  );
+  background: -o-linear-gradient(287deg, #d4a01a 12%, #efbb34 51%, #d4a01a 76%, #efbb34 96%);
+  background: linear-gradient(163deg, #d4a01a 12%, #efbb34 51%, #d4a01a 76%, #efbb34 96%);
   color: #fff;
   width: 40px;
   height: 40px;
@@ -929,20 +916,8 @@ picture {
     color-stop(87%, #d8d8d8),
     to(#cdc9c9)
   );
-  background: -o-linear-gradient(
-    top,
-    #d8d8d8 0%,
-    #efefef 57%,
-    #d8d8d8 87%,
-    #cdc9c9 100%
-  );
-  background: linear-gradient(
-    to bottom,
-    #d8d8d8 0%,
-    #efefef 57%,
-    #d8d8d8 87%,
-    #cdc9c9 100%
-  );
+  background: -o-linear-gradient(top, #d8d8d8 0%, #efefef 57%, #d8d8d8 87%, #cdc9c9 100%);
+  background: linear-gradient(to bottom, #d8d8d8 0%, #efefef 57%, #d8d8d8 87%, #cdc9c9 100%);
   width: 40px;
   height: 40px;
   border-radius: 40px;
@@ -960,20 +935,8 @@ picture {
     color-stop(62%, #dfa739),
     to(#b17c13)
   );
-  background: -o-linear-gradient(
-    top,
-    #c68c1b 0%,
-    #f0c571 47%,
-    #dfa739 62%,
-    #b17c13 100%
-  );
-  background: linear-gradient(
-    to bottom,
-    #c68c1b 0%,
-    #f0c571 47%,
-    #dfa739 62%,
-    #b17c13 100%
-  );
+  background: -o-linear-gradient(top, #c68c1b 0%, #f0c571 47%, #dfa739 62%, #b17c13 100%);
+  background: linear-gradient(to bottom, #c68c1b 0%, #f0c571 47%, #dfa739 62%, #b17c13 100%);
   width: 40px;
   height: 40px;
   border-radius: 40px;
@@ -995,7 +958,7 @@ picture {
 }
 .ledger tbody tr td.wager {
   font-size: 20px;
-  font-family: "Lato";
+  font-family: 'Lato';
   font-weight: 700;
 }
 .scroll-holder {
@@ -1196,9 +1159,9 @@ picture {
   }
 }
 @media (max-width: 767px) {
-#header .row {
-  padding: 0 16px;
-}
+  #header .row {
+    padding: 0 16px;
+  }
   picture {
     width: 92px;
   }
@@ -1472,4 +1435,3 @@ picture {
     top: 20.927vh;
   }
 }
-

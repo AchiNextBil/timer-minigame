@@ -1,29 +1,15 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
-import styles from './BannerBasic.module.css';
+import { Book, Calendar, CircleCheckBig, Clock, Gift, Play, ShieldAlert } from 'lucide-react';
 import Image from 'next/image';
-import HistoryModal from '../historyModal/HistoryModal';
-import { useRouter } from 'next/navigation';
-import zhCN from '@/app/translations';
+import { useState } from 'react';
 import Spinner from '../ui/spinner/Spinner';
-import SuccessModal from '../SuccessModal/SuccessModal';
-import {
-  Book,
-  BookOpen,
-  Calendar,
-  CircleCheckBig,
-  Clock,
-  Gift,
-  Play,
-  ShieldAlert,
-  Trophy,
-} from 'lucide-react';
+import styles from './BannerBasic.module.css';
 
 // const BASE = '';
 const BASE = '/achi/timer';
 
-const GAME_END_DATE = new Date('2026-08-19T00:00:00');
+// const GAME_END_DATE = new Date('2026-08-19T00:00:00');
 
 type TQuestion = {
   id: number | string;
@@ -52,16 +38,16 @@ const formatDate = (d: Date): string => {
 const BannerBasic = () => {
   const [loading, setLoading] = useState(false);
   const [gameFinished, setGameFinished] = useState(false);
-  const [historyModal, setHistoryModal] = useState(false);
-  const [isSuccessModal, setIsSuccessModal] = useState(false);
+  // const [historyModal, setHistoryModal] = useState(false);
+  // const [isSuccessModal, setIsSuccessModal] = useState(false);
   const [username, setUsername] = useState('');
   const [errors, setErrors] = useState({ username: '' });
 
-  const router = useRouter();
+  // const router = useRouter();
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-  };
+  // const handleSubmit = async (e: React.FormEvent) => {
+  //   e.preventDefault();
+  // };
 
   return (
     <section className={styles.bannerWrapper}>

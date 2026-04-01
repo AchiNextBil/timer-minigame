@@ -20,7 +20,7 @@
   list-style-type: disc;
   padding-left: 1.5rem;
   margin-top: 0.5rem;
-} 
+}
 
 /* Table base styles */
 .tncParent table {
@@ -30,7 +30,7 @@
 }
 /* Header row */
 .tncParent thead th {
-  background-color: #383E4D;
+  background-color: #383e4d;
   color: #ffffff;
   font-weight: bold;
   text-align: center;
@@ -39,7 +39,7 @@
 }
 
 .tncParent tbody tr:nth-child(even) {
-  background-color: #383E4D;
+  background-color: #383e4d;
   color: #ffffff; /* make sure text is readable */
 }
 
@@ -47,7 +47,6 @@
   background-color: transparent;
   color: #ffffff; /* keep text visible */
 }
-
 
 /* Table body cells */
 .tncParent tbody td {
@@ -58,7 +57,7 @@
 }
 /* Alternate td background color */
 .tncParent tbody tr td:nth-child(even) {
-  background-color: #383E4D;
+  background-color: #383e4d;
 }
 
 .tncParent tbody tr td:nth-child(odd) {
