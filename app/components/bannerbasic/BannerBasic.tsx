@@ -16,6 +16,8 @@ import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
 import Spinner from '../ui/spinner/Spinner';
 import styles from './BannerBasic.module.css';
+import SuccessModal from '../SuccessModal/SuccessModal';
+import FailureModal from '../FailureModal/FailureModal';
 
 const BASE = '';
 // const BASE = '/achi/timer';
@@ -39,13 +41,15 @@ const RESULT_CONFIG: Record<Exclude<ResultKey, ''>, { icon: React.ReactNode; col
   'missed it': { icon: <CircleAlert size={20} />, color: '#ff4d4f' },
 };
 
+const isWin = (result: ResultKey) => result === 'perfect timing' || result === 'well timing';
+
 const BannerBasic = () => {
   const [loading, setLoading] = useState(false);
   const [gameFinished, setGameFinished] = useState(false);
   const [username, setUsername] = useState<string>('');
   const [usernameTouched, setUsernameTouched] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false); // API call in-flight
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [allowedToPlay, setAllowedToPlay] = useState<boolean | null>(null);
   const [checkingAllowence, setCheckingAllowence] = useState<boolean>(false);
   const [time, setTime] = useState<number>(0);
@@ -53,6 +57,10 @@ const BannerBasic = () => {
   const [errorMsg, setErrorMsg] = useState<string>('');
   const [resultMessage, setResultMessage] = useState<ResultKey>('');
   const timeRef = useRef<number>(0);
+
+  // Modal visibility
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [showFailureModal, setShowFailureModal] = useState(false);
 
   useEffect(() => {
     const isUserAllowed = setTimeout(async () => {
@@ -98,17 +106,14 @@ const BannerBasic = () => {
   };
 
   const doSubmit = async (finalTime: number) => {
-    // Stop the interval immediately
     if (intervalRef.current) {
       clearInterval(intervalRef.current);
       intervalRef.current = null;
     }
     if (navigator.vibrate) navigator.vibrate(50);
 
-    // Evaluate locally right away — this is instant and correct
     const result = evaluateResult(finalTime);
 
-    // Lock the button and show spinner — API call begins
     setIsSubmitted(true);
     setIsSubmitting(true);
     setResultMessage('');
@@ -125,13 +130,16 @@ const BannerBasic = () => {
       if (error instanceof Error) {
         console.log(error);
         setErrorMsg(error.message);
-        // Still show the result even on network failure —
-        // the time was captured correctly on the client
       }
     } finally {
-      // Always hide spinner and reveal result, success or error
       setIsSubmitting(false);
       setResultMessage(result);
+
+      if (isWin(result)) {
+        setShowSuccessModal(true);
+      } else {
+        setShowFailureModal(true);
+      }
     }
   };
 
@@ -180,6 +188,10 @@ const BannerBasic = () => {
 
   return (
     <section className={styles.bannerWrapper}>
+      {/* Modals — rendered outside the form, above everything */}
+      {showSuccessModal && <SuccessModal onClose={() => setShowSuccessModal(false)} />}
+      {showFailureModal && <FailureModal onClose={() => setShowFailureModal(false)} />}
+
       {/* HERO */}
       <div className={styles.hero}>
         <Image
@@ -297,7 +309,6 @@ const BannerBasic = () => {
                 </>
               )}
 
-              {/* STOP button — visible while timer running, not yet stopped */}
               {time > 0 && !isSubmitting && !isSubmitted && (
                 <button type="submit" className={styles.submitButton} disabled={isSubmitted}>
                   <Square size={21} fill="#ffffff" stroke="none" />
@@ -305,7 +316,6 @@ const BannerBasic = () => {
                 </button>
               )}
 
-              {/* LOADING — API call in flight after stop */}
               {isSubmitting && (
                 <div className={styles.submittingWrapper}>
                   <div className={styles.submittingSpinner} />
@@ -313,7 +323,6 @@ const BannerBasic = () => {
                 </div>
               )}
 
-              {/* RESULT — shown once API responds */}
               {resultMessage && !isSubmitting && (
                 <div
                   className={styles.resultWrapper}

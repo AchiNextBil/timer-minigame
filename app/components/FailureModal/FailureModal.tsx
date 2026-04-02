@@ -1,6 +1,6 @@
 'use client';
 import Image from 'next/image';
-import styles from './SuccessModal.module.css';
+import styles from './FailureModal.module.css';
 import zhCN from '@/app/translations';
 
 type SuccessModalProps = {
@@ -10,7 +10,7 @@ type SuccessModalProps = {
 const BASE = '';
 // const BASE = '/achi/questions';
 
-const SuccessModal = ({ onClose }: SuccessModalProps) => {
+const FailureModal = ({ onClose }: SuccessModalProps) => {
   return (
     <div className={styles.overlay} onClick={onClose}>
       <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
@@ -28,9 +28,9 @@ const SuccessModal = ({ onClose }: SuccessModalProps) => {
         </div>
 
         <div className={styles.content}>
-          <Image src={`${BASE}/svg/success-green.svg`} alt="success" width={100} height={100} />
+          <Image src={`${BASE}/svg/error-red.svg`} alt="success" width={100} height={100} />
           <h1>{zhCN.submitted}</h1>
-          <h6>You have won 50 points</h6>
+          <h6>You have won no points today. Come back tomorrow and try again</h6>
         </div>
         <div className={styles.footer}>
           <button
@@ -47,4 +47,4 @@ const SuccessModal = ({ onClose }: SuccessModalProps) => {
   );
 };
 
-export default SuccessModal;
+export default FailureModal;
