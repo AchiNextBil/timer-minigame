@@ -3,12 +3,14 @@
 import {
   Book,
   Calendar,
+  CircleAlert,
   CircleCheckBig,
   Clock,
   Gift,
   Play,
   ShieldAlert,
   Square,
+  Trophy,
 } from 'lucide-react';
 import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
@@ -18,30 +20,39 @@ import styles from './BannerBasic.module.css';
 const BASE = '';
 // const BASE = '/achi/timer';
 
-// const GAME_END_DATE = new Date('2026-08-19T00:00:00');
-
 const formatTime = (t: number): string => {
   const totalMs = Math.floor(t * 1000);
   const secs = Math.floor(totalMs / 1000);
   const ms = totalMs % 1000;
-
   return `${secs}:${ms.toString().padStart(3, '0')}`;
+};
+
+const USERNAME_REGEX = /^[A-Za-z0-9]{3,16}$/;
+
+type ResultKey = 'perfect timing' | 'well timing' | 'bit fast' | 'bit slow' | 'missed it' | '';
+
+const RESULT_CONFIG: Record<Exclude<ResultKey, ''>, { icon: React.ReactNode; color: string }> = {
+  'perfect timing': { icon: <Trophy size={20} />, color: '#05df72' },
+  'well timing': { icon: <Trophy size={20} />, color: '#05df72' },
+  'bit fast': { icon: <Clock size={20} />, color: '#ff4d4f' },
+  'bit slow': { icon: <Clock size={20} />, color: '#ff4d4f' },
+  'missed it': { icon: <CircleAlert size={20} />, color: '#ff4d4f' },
 };
 
 const BannerBasic = () => {
   const [loading, setLoading] = useState(false);
   const [gameFinished, setGameFinished] = useState(false);
-  // const [historyModal, setHistoryModal] = useState(false);
-  // const [isSuccessModal, setIsSuccessModal] = useState(false);
   const [username, setUsername] = useState<string>('');
-  const [errors, setErrors] = useState({ username: '' });
+  const [usernameTouched, setUsernameTouched] = useState(false);
+  // const [errors, setErrors] = useState({ username: '' });
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [allowedToPlay, setAllowedToPlay] = useState<boolean | null>(null);
   const [checkingAllowence, setCheckingAllowence] = useState<boolean>(false);
   const [time, setTime] = useState<number>(0);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const [errorMsg, setErrorMsg] = useState<string>('');
-  const [resultMessage, setResultMessage] = useState<string>('');
+  const [resultMessage, setResultMessage] = useState<ResultKey>('');
+  const timeRef = useRef<number>(0);
 
   useEffect(() => {
     const isUserAllowed = setTimeout(async () => {
@@ -49,9 +60,7 @@ const BannerBasic = () => {
         if (!username?.trim()) return;
         setCheckingAllowence(true);
         const res = await fetch('https://clubthreesix.com/giorgi/api-game-2/check.php', {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: { 'Content-Type': 'application/json' },
           method: 'POST',
           body: JSON.stringify({ username: username.trim() }),
         });
@@ -73,60 +82,37 @@ const BannerBasic = () => {
 
   useEffect(() => {
     return () => {
-      if (intervalRef.current) {
-        clearInterval(intervalRef.current);
-      }
+      if (intervalRef.current) clearInterval(intervalRef.current);
     };
   }, []);
 
-  const startTimer = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    if (time > 0) return;
-    setTime(0);
-    const start = Date.now();
-
-    intervalRef.current = setInterval(() => {
-      const elapsed = (Date.now() - start) / 1000;
-      setTime(elapsed);
-    }, 99);
-  };
-
-  const evaluateResult = (t: number) => {
+  const evaluateResult = (t: number): ResultKey => {
     if (t >= 8.8 && t <= 8.9) {
       if (Math.abs(t - 8.88) < 0.01) return 'perfect timing';
       return 'well timing';
     }
-
     if (t < 8.8) return 'bit fast';
     if (t > 8.9 && t < 10) return 'bit slow';
     if (t >= 10) return 'missed it';
-
     return '';
   };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    if (!username?.trim() || isSubmitted) return;
-    setIsSubmitted(true);
-
-    // Stop the timer first
+  const doSubmit = async (finalTime: number) => {
     if (intervalRef.current) {
       clearInterval(intervalRef.current);
       intervalRef.current = null;
     }
-    if (navigator.vibrate) {
-      navigator.vibrate(50);
-    }
+    if (navigator.vibrate) navigator.vibrate(50);
 
-    const result = evaluateResult(time);
+    const result = evaluateResult(finalTime);
     setResultMessage(result);
+    setIsSubmitted(true);
 
     try {
       const res = await fetch('https://clubthreesix.com/giorgi/api-game-2/submit.php', {
         headers: { 'Content-Type': 'application/json' },
         method: 'POST',
-        body: JSON.stringify({ username: username?.trim(), result: formatTime(time) }),
+        body: JSON.stringify({ username: username?.trim(), result: formatTime(finalTime) }),
       });
       const data = await res.json();
       console.log(data);
@@ -134,10 +120,57 @@ const BannerBasic = () => {
       if (error instanceof Error) {
         console.log(error);
         setErrorMsg(error.message);
-        setIsSubmitted(false); // allow retry if failed
+        setIsSubmitted(false);
       }
     }
   };
+
+  const startTimer = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    if (time > 0) return;
+    setTime(0);
+    timeRef.current = 0;
+    const start = Date.now();
+
+    intervalRef.current = setInterval(() => {
+      const elapsed = (Date.now() - start) / 1000;
+      timeRef.current = elapsed;
+      setTime(elapsed);
+
+      // Auto-stop at 10 seconds
+      if (elapsed >= 10) {
+        doSubmit(elapsed);
+      }
+    }, 99);
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!username?.trim() || isSubmitted || time === 0) return;
+    await doSubmit(timeRef.current);
+  };
+
+  // Block Enter key from triggering start or unintended submit
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLFormElement>) => {
+    if (e.key === 'Enter') {
+      const target = e.target as HTMLElement;
+      // Only allow Enter if the focused element is the stop button
+      if (target.tagName !== 'BUTTON' || (target as HTMLButtonElement).type !== 'submit') {
+        e.preventDefault();
+      }
+    }
+  };
+
+  const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // Strip any character that is not A-Za-z0-9
+    const filtered = e.target.value.replace(/[^A-Za-z0-9]/g, '');
+    setUsername(filtered);
+  };
+
+  const isUsernameValid = USERNAME_REGEX.test(username);
+  const showUsernameError = usernameTouched && username.length > 0 && !isUsernameValid;
+  const isStartDisabled =
+    !isUsernameValid || allowedToPlay === false || checkingAllowence || time > 0;
 
   return (
     <section className={styles.bannerWrapper}>
@@ -193,7 +226,7 @@ const BannerBasic = () => {
       ) : (
         <div className={styles.gameWrapper}>
           <div className={styles.mainGameWrapper}>
-            <form className={styles.card} onSubmit={handleSubmit}>
+            <form className={styles.card} onSubmit={handleSubmit} onKeyDown={handleKeyDown}>
               <div className={styles.titleWrapper}>
                 <Gift color="#CAAB72" size={20} />
                 <p className={styles.challenge}>Freebet Challenge</p>
@@ -217,10 +250,21 @@ const BannerBasic = () => {
                   placeholder="enter your username"
                   value={username || ''}
                   maxLength={16}
-                  className={errors.username ? styles.inputError : ''}
-                  onChange={(e) => setUsername(e.target.value)}
+                  className={showUsernameError ? styles.inputError : ''}
+                  onChange={handleUsernameChange}
+                  onFocus={() => setUsernameTouched(true)}
+                  disabled={time > 0}
                 />
-                {errors.username && <span className={styles.errorText}>{errors.username}</span>}
+                {showUsernameError && (
+                  <span className={styles.errorText}>
+                    仅限 3-16 个字母数字（A-Z、a-z、0-9）字符。
+                  </span>
+                )}
+                {!showUsernameError && username.length === 0 && usernameTouched && (
+                  <span className={styles.errorText}>
+                    仅限 3-16 个字母数字（A-Z、a-z、0-9）字符。
+                  </span>
+                )}
                 {errorMsg && <span className={styles.errorText}>{errorMsg}</span>}
                 {checkingAllowence && (
                   <span className={styles.checkingText}>checkingAllowence...</span>
@@ -229,27 +273,47 @@ const BannerBasic = () => {
                   <span className={styles.errorText}>you already played today</span>
                 )}
               </div>
+
               {time === 0 && (
-                <button
-                  type="button"
-                  onClick={startTimer}
-                  className={styles.startButton}
-                  disabled={
-                    allowedToPlay === false || !username?.trim() || checkingAllowence || time > 0
-                  }
-                >
-                  <Play size={21} fill="#ffffff" stroke="none" />
-                  <p className={styles.submitText}>START TIMER</p>
-                </button>
+                <>
+                  <button
+                    type="button"
+                    onClick={startTimer}
+                    className={`${styles.startButton} ${isStartDisabled ? styles.startButtonDisabled : ''}`}
+                    disabled={isStartDisabled}
+                  >
+                    <Play size={21} fill="#ffffff" stroke="none" />
+                    <p className={styles.submitText}>START TIMER</p>
+                  </button>
+                  {!isUsernameValid && username.length === 0 && (
+                    <p className={styles.startHint}>Enter your username to start</p>
+                  )}
+                </>
               )}
+
               {time > 0 && (
                 <button type="submit" className={styles.submitButton} disabled={isSubmitted}>
                   <Square size={21} fill="#ffffff" stroke="none" />
                   <p className={styles.submitText}>{isSubmitted ? 'SUBMITTED' : 'STOP NOW'}</p>
                 </button>
               )}
-              {resultMessage && <p className={styles.resultText}>{resultMessage}</p>}
+
+              {resultMessage && (
+                <div
+                  className={styles.resultWrapper}
+                  style={{ color: RESULT_CONFIG[resultMessage]?.color ?? '#05df72' }}
+                >
+                  {RESULT_CONFIG[resultMessage]?.icon}
+                  <p
+                    className={styles.resultText}
+                    style={{ color: RESULT_CONFIG[resultMessage]?.color ?? '#05df72' }}
+                  >
+                    {resultMessage}
+                  </p>
+                </div>
+              )}
             </form>
+
             <div className={styles.card2}>
               <h1 className={styles.gameRulesTitle}>
                 <Book size={20} color="#ffa30f" />
