@@ -44,8 +44,8 @@ const BannerBasic = () => {
   const [gameFinished, setGameFinished] = useState(false);
   const [username, setUsername] = useState<string>('');
   const [usernameTouched, setUsernameTouched] = useState(false);
-  // const [errors, setErrors] = useState({ username: '' });
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false); // API call in-flight
   const [allowedToPlay, setAllowedToPlay] = useState<boolean | null>(null);
   const [checkingAllowence, setCheckingAllowence] = useState<boolean>(false);
   const [time, setTime] = useState<number>(0);
@@ -98,15 +98,20 @@ const BannerBasic = () => {
   };
 
   const doSubmit = async (finalTime: number) => {
+    // Stop the interval immediately
     if (intervalRef.current) {
       clearInterval(intervalRef.current);
       intervalRef.current = null;
     }
     if (navigator.vibrate) navigator.vibrate(50);
 
+    // Evaluate locally right away — this is instant and correct
     const result = evaluateResult(finalTime);
-    setResultMessage(result);
+
+    // Lock the button and show spinner — API call begins
     setIsSubmitted(true);
+    setIsSubmitting(true);
+    setResultMessage('');
 
     try {
       const res = await fetch('https://clubthreesix.com/giorgi/api-game-2/submit.php', {
@@ -120,8 +125,13 @@ const BannerBasic = () => {
       if (error instanceof Error) {
         console.log(error);
         setErrorMsg(error.message);
-        setIsSubmitted(false);
+        // Still show the result even on network failure —
+        // the time was captured correctly on the client
       }
+    } finally {
+      // Always hide spinner and reveal result, success or error
+      setIsSubmitting(false);
+      setResultMessage(result);
     }
   };
 
@@ -137,7 +147,6 @@ const BannerBasic = () => {
       timeRef.current = elapsed;
       setTime(elapsed);
 
-      // Auto-stop at 10 seconds
       if (elapsed >= 10) {
         doSubmit(elapsed);
       }
@@ -150,11 +159,9 @@ const BannerBasic = () => {
     await doSubmit(timeRef.current);
   };
 
-  // Block Enter key from triggering start or unintended submit
   const handleKeyDown = (e: React.KeyboardEvent<HTMLFormElement>) => {
     if (e.key === 'Enter') {
       const target = e.target as HTMLElement;
-      // Only allow Enter if the focused element is the stop button
       if (target.tagName !== 'BUTTON' || (target as HTMLButtonElement).type !== 'submit') {
         e.preventDefault();
       }
@@ -162,7 +169,6 @@ const BannerBasic = () => {
   };
 
   const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // Strip any character that is not A-Za-z0-9
     const filtered = e.target.value.replace(/[^A-Za-z0-9]/g, '');
     setUsername(filtered);
   };
@@ -291,14 +297,24 @@ const BannerBasic = () => {
                 </>
               )}
 
-              {time > 0 && (
+              {/* STOP button — visible while timer running, not yet stopped */}
+              {time > 0 && !isSubmitting && !isSubmitted && (
                 <button type="submit" className={styles.submitButton} disabled={isSubmitted}>
                   <Square size={21} fill="#ffffff" stroke="none" />
-                  <p className={styles.submitText}>{isSubmitted ? 'SUBMITTED' : 'STOP NOW'}</p>
+                  <p className={styles.submitText}>STOP NOW</p>
                 </button>
               )}
 
-              {resultMessage && (
+              {/* LOADING — API call in flight after stop */}
+              {isSubmitting && (
+                <div className={styles.submittingWrapper}>
+                  <div className={styles.submittingSpinner} />
+                  <p className={styles.submittingText}>Saving your result...</p>
+                </div>
+              )}
+
+              {/* RESULT — shown once API responds */}
+              {resultMessage && !isSubmitting && (
                 <div
                   className={styles.resultWrapper}
                   style={{ color: RESULT_CONFIG[resultMessage]?.color ?? '#05df72' }}
