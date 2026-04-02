@@ -36,13 +36,10 @@
 
 .gameWrapper {
   width: 100%;
-  /* min-height: 920px; */
   padding-top: 0px;
   padding-bottom: 20px;
   background-image:
     linear-gradient(rgba(33, 41, 59, 1), rgba(35, 41, 57, 0.9)), url('/achi/timer/game-banner.jpg');
-  /* linear-gradient(rgba(33, 41, 59, 1), rgba(35, 41, 57, 0.9)), url('/game-banner.jpg'); */
-
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -51,9 +48,7 @@
 .mainGameWrapper {
   max-width: 620px;
   margin: 0 auto;
-
   padding: 0 25px;
-
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -65,11 +60,9 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
-
   position: absolute;
   bottom: 20px;
   max-width: 620px;
-
   left: 50%;
   transform: translateX(-50%);
 }
@@ -82,7 +75,7 @@
 }
 
 .title {
-  font-size: clamp(38px, 5vw, 64px);
+  font-size: clamp(28px, 5vw, 64px);
   font-weight: 800;
   background: linear-gradient(to right, #ffffff, #e2e8f0, #90a1b9);
   -webkit-background-clip: text;
@@ -91,7 +84,7 @@
 }
 
 .title2 {
-  font-size: clamp(38px, 5vw, 64px);
+  font-size: clamp(28px, 5vw, 64px);
   font-weight: 800;
   background: linear-gradient(to right, #caab72, #927134);
   -webkit-background-clip: text;
@@ -115,7 +108,6 @@
   width: 100%;
   height: 100%;
   padding: 40px 30px 50px 30px;
-
   border: 1px solid rgba(202, 171, 114, 0.328);
   border-radius: 24px;
   background-color: #222939;
@@ -135,22 +127,17 @@
 
 .daysWrapper {
   border: 1px solid rgba(202, 171, 114, 0.2);
-
   display: flex;
   gap: 4px;
   align-items: center;
   justify-content: center;
-
   padding: 10px 25px;
   border-radius: 40px;
   margin-top: 30px;
-
   background: #2d3443cc;
-
   box-shadow:
     0 0 10px rgba(120, 149, 255, 0.12),
     0 0 20px rgba(120, 149, 255, 0.084);
-
   backdrop-filter: blur(6px);
 }
 
@@ -227,21 +214,16 @@
   align-items: center;
   justify-content: center;
   gap: 6px;
-
   padding: 14px 0px;
   margin-top: 20px;
-
   border-radius: 16px;
   border: none;
   cursor: pointer;
-
   background: linear-gradient(to right, #caab72, #927134);
-
   box-shadow:
     0 4px 12px rgba(56, 56, 56, 0.35),
     0 0 10px rgba(202, 171, 114, 0.25),
     0 0 20px rgba(202, 171, 114, 0.15);
-
   position: relative;
   overflow: hidden;
   transition:
@@ -291,21 +273,16 @@
   align-items: center;
   justify-content: center;
   gap: 6px;
-
   padding: 14px 0px;
   margin-top: 20px;
-
   border-radius: 16px;
   border: none;
   cursor: pointer;
-
   background: linear-gradient(to right, #ca7272, #923434);
-
   box-shadow:
     0 4px 12px rgba(56, 56, 56, 0.35),
     0 0 10px rgba(202, 114, 114, 0.25),
     0 0 20px rgba(202, 114, 114, 0.15);
-
   position: relative;
   overflow: hidden;
 }
@@ -318,9 +295,7 @@
   padding: 30px 20px;
   border-radius: 24px;
   background-color: #222939;
-
   border: 1px solid rgba(202, 171, 114, 0.3);
-  background-color: #222939;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
   background-image:
     radial-gradient(circle at top left, rgba(202, 171, 114, 0.15), transparent 40%),
@@ -369,7 +344,6 @@
   margin: 0px 0 0 18px;
 }
 
-/* ── Submitting state (replaces stop button while API is in-flight) ── */
 .submittingWrapper {
   width: 100%;
   display: flex;
@@ -394,9 +368,7 @@
 }
 
 @keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
+  to { transform: rotate(360deg); }
 }
 
 .submittingText {
@@ -410,14 +382,32 @@
 .resultWrapper {
   display: flex;
   align-items: center;
-  gap: 8px;
-  margin: 30px 0px 0px 0px;
+  gap: 10px;
+  margin: 30px 0 0 0;
+}
+
+/* wraps the two text lines so icon stays vertically centred */
+.resultTextWrapper {
+  display: flex;
+  /* flex-direction: column; */
+  gap: 4px;
+  align-content: center;
+  justify-content: center;
 }
 
 .resultText {
   font-size: 16px;
   font-weight: 700;
   text-transform: uppercase;
+  line-height: 1;
+}
+
+/* prize amount shown below the result label */
+.resultPrize {
+  font-size: 16px;
+  font-weight: 700;
+  text-transform: uppercase;
+  line-height: 1;
 }
 
 /* ============================= */
@@ -429,11 +419,9 @@
     align-items: center;
     justify-content: center;
     flex-direction: column;
-
     position: absolute;
     bottom: 60px;
     width: 100%;
-
     left: 50%;
     transform: translateX(-50%);
     padding: 0px 15px;

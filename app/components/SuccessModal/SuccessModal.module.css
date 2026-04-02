@@ -115,3 +115,7 @@
   transition: all;
   transition-duration: 300ms;
 }
+
+.winnedPrize{
+  font-size: 26px;
+}

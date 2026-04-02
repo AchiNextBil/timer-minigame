@@ -31,17 +31,36 @@ const formatTime = (t: number): string => {
 
 const USERNAME_REGEX = /^[A-Za-z0-9]{3,16}$/;
 
-type ResultKey = 'perfect timing' | 'well timing' | 'bit fast' | 'bit slow' | 'missed it' | '';
+type ResultKey =
+  | 'perfect timing'
+  | 'well timing'
+  | 'good timing'
+  | 'bit fast, try again tomorrow'
+  | 'bit slow, try again tomorrow'
+  | 'missed it, try again tomorrow'
+  | '';
 
-const RESULT_CONFIG: Record<Exclude<ResultKey, ''>, { icon: React.ReactNode; color: string }> = {
-  'perfect timing': { icon: <Trophy size={20} />, color: '#05df72' },
-  'well timing': { icon: <Trophy size={20} />, color: '#05df72' },
-  'bit fast': { icon: <Clock size={20} />, color: '#ff4d4f' },
-  'bit slow': { icon: <Clock size={20} />, color: '#ff4d4f' },
-  'missed it': { icon: <CircleAlert size={20} />, color: '#ff4d4f' },
+interface ResultConfig {
+  icon: React.ReactNode;
+  color: string;
+  prize: number | null; // CNY prize, null = no prize
+}
+
+const RESULT_CONFIG: Record<Exclude<ResultKey, ''>, ResultConfig> = {
+  'perfect timing': { icon: <Trophy size={20} />, color: '#05df72', prize: 36 },
+  'well timing': { icon: <Trophy size={20} />, color: '#05df72', prize: 18 },
+  'good timing': { icon: <Trophy size={20} />, color: '#ffc74d', prize: 8 },
+  'bit fast, try again tomorrow': { icon: <Clock size={20} />, color: '#ff4d4f', prize: null },
+  'bit slow, try again tomorrow': { icon: <Clock size={20} />, color: '#ff4d4f', prize: null },
+  'missed it, try again tomorrow': {
+    icon: <CircleAlert size={20} />,
+    color: '#ff4d4f',
+    prize: null,
+  },
 };
 
-const isWin = (result: ResultKey) => result === 'perfect timing' || result === 'well timing';
+const isWin = (result: ResultKey) =>
+  result === 'perfect timing' || result === 'well timing' || result === 'good timing';
 
 const BannerBasic = () => {
   const [loading, setLoading] = useState(false);
@@ -53,12 +72,16 @@ const BannerBasic = () => {
   const [allowedToPlay, setAllowedToPlay] = useState<boolean | null>(null);
   const [checkingAllowence, setCheckingAllowence] = useState<boolean>(false);
   const [time, setTime] = useState<number>(0);
-  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  const rafRef = useRef<number | null>(null);
+  const startTimeRef = useRef<number>(0);
+  const timeRef = useRef<number>(0);
+  const isSubmittingRef = useRef(false);
+
   const [errorMsg, setErrorMsg] = useState<string>('');
   const [resultMessage, setResultMessage] = useState<ResultKey>('');
-  const timeRef = useRef<number>(0);
+  const [prize, setPrize] = useState<number | null>(null); // ← prize in CNY
 
-  // Modal visibility
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [showFailureModal, setShowFailureModal] = useState(false);
 
@@ -90,33 +113,37 @@ const BannerBasic = () => {
 
   useEffect(() => {
     return () => {
-      if (intervalRef.current) clearInterval(intervalRef.current);
+      if (rafRef.current !== null) cancelAnimationFrame(rafRef.current);
     };
   }, []);
 
   const evaluateResult = (t: number): ResultKey => {
-    if (t >= 8.8 && t <= 8.9) {
+    if (t >= 8.8 && t < 8.9) {
       if (Math.abs(t - 8.88) < 0.01) return 'perfect timing';
       return 'well timing';
     }
-    if (t < 8.8) return 'bit fast';
-    if (t > 8.9 && t < 10) return 'bit slow';
-    if (t >= 10) return 'missed it';
+    if (t >= 8.9 && t < 9.0) return 'good timing';
+    if (t < 8.8) return 'bit fast, try again tomorrow';
+    if (t >= 9.0 && t < 10) return 'bit slow, try again tomorrow';
+    if (t >= 10) return 'missed it, try again tomorrow';
     return '';
   };
 
   const doSubmit = async (finalTime: number) => {
-    if (intervalRef.current) {
-      clearInterval(intervalRef.current);
-      intervalRef.current = null;
+    if (rafRef.current !== null) {
+      cancelAnimationFrame(rafRef.current);
+      rafRef.current = null;
     }
     if (navigator.vibrate) navigator.vibrate(50);
 
     const result = evaluateResult(finalTime);
+    const earnedPrize = result !== '' ? RESULT_CONFIG[result].prize : null;
 
     setIsSubmitted(true);
     setIsSubmitting(true);
+    isSubmittingRef.current = true;
     setResultMessage('');
+    setPrize(null);
 
     try {
       const res = await fetch('https://clubthreesix.com/giorgi/api-game-2/submit.php', {
@@ -133,7 +160,9 @@ const BannerBasic = () => {
       }
     } finally {
       setIsSubmitting(false);
+      isSubmittingRef.current = false;
       setResultMessage(result);
+      setPrize(earnedPrize);
 
       if (isWin(result)) {
         setShowSuccessModal(true);
@@ -145,25 +174,31 @@ const BannerBasic = () => {
 
   const startTimer = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    if (time > 0) return;
-    setTime(0);
-    timeRef.current = 0;
-    const start = Date.now();
+    if (timeRef.current > 0) return;
 
-    intervalRef.current = setInterval(() => {
-      const elapsed = (Date.now() - start) / 1000;
+    startTimeRef.current = performance.now();
+    timeRef.current = 0;
+    setTime(0);
+
+    const tick = (now: number) => {
+      const elapsed = (now - startTimeRef.current) / 1000;
       timeRef.current = elapsed;
       setTime(elapsed);
 
       if (elapsed >= 10) {
-        doSubmit(elapsed);
+        if (!isSubmittingRef.current) doSubmit(elapsed);
+        return;
       }
-    }, 99);
+
+      rafRef.current = requestAnimationFrame(tick);
+    };
+
+    rafRef.current = requestAnimationFrame(tick);
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!username?.trim() || isSubmitted || time === 0) return;
+    if (!username?.trim() || isSubmitted || timeRef.current === 0) return;
     await doSubmit(timeRef.current);
   };
 
@@ -186,10 +221,13 @@ const BannerBasic = () => {
   const isStartDisabled =
     !isUsernameValid || allowedToPlay === false || checkingAllowence || time > 0;
 
+  const currentConfig = resultMessage ? RESULT_CONFIG[resultMessage] : null;
+
   return (
     <section className={styles.bannerWrapper}>
-      {/* Modals — rendered outside the form, above everything */}
-      {showSuccessModal && <SuccessModal onClose={() => setShowSuccessModal(false)} />}
+      {showSuccessModal && (
+        <SuccessModal prize={prize} onClose={() => setShowSuccessModal(false)} />
+      )}
       {showFailureModal && <FailureModal onClose={() => setShowFailureModal(false)} />}
 
       {/* HERO */}
@@ -254,7 +292,7 @@ const BannerBasic = () => {
                 <p className={styles.daysTitle}>1 try / day</p>
               </div>
               <div className={styles.secondsWrapper}>
-                <h1 className={styles.seconds}>{time?.toFixed(2)}</h1>
+                <h1 className={styles.seconds}>{time.toFixed(2)}</h1>
                 <p className={styles.secondsText}>seconds</p>
               </div>
               <div className={styles.inputWrapper}>
@@ -323,18 +361,20 @@ const BannerBasic = () => {
                 </div>
               )}
 
-              {resultMessage && !isSubmitting && (
-                <div
-                  className={styles.resultWrapper}
-                  style={{ color: RESULT_CONFIG[resultMessage]?.color ?? '#05df72' }}
-                >
-                  {RESULT_CONFIG[resultMessage]?.icon}
-                  <p
-                    className={styles.resultText}
-                    style={{ color: RESULT_CONFIG[resultMessage]?.color ?? '#05df72' }}
-                  >
-                    {resultMessage}
-                  </p>
+              {/* Result row — label + prize if won */}
+              {resultMessage && !isSubmitting && currentConfig && (
+                <div className={styles.resultWrapper} style={{ color: currentConfig.color }}>
+                  {currentConfig.icon}
+                  <div className={styles.resultTextWrapper}>
+                    <p className={styles.resultText} style={{ color: currentConfig.color }}>
+                      {resultMessage}
+                    </p>
+                    {currentConfig.prize !== null && (
+                      <p className={styles.resultPrize} style={{ color: currentConfig.color }}>
+                        +{currentConfig.prize} CNY
+                      </p>
+                    )}
+                  </div>
                 </div>
               )}
             </form>
@@ -347,12 +387,12 @@ const BannerBasic = () => {
               <div className={styles.gameRulesWrapper}>
                 <h1 className={styles.gameRulesTitle2}>
                   <Clock size={20} color="#784ff3" />
-                  <span>Goal:</span> Stop the timer Between 8.80 to 8.90 seconds.
+                  <span>Goal:</span> Stop the timer between 8.80 and 9.00 seconds.
                 </h1>
                 <h1 className={styles.gameRulesTitle2}>
                   <CircleCheckBig size={25} color="#15cb04" />
-                  <span>Prize:</span> Players who land within the winning window will receive a
-                  Casino Freebet credited to their account.
+                  <span>Prize:</span> 8.88s = 18+18 CNY &nbsp;·&nbsp; 8.80–8.90s = 18 CNY
+                  &nbsp;·&nbsp; 8.90–9.00s = 8 CNY
                 </h1>
                 <h1 className={styles.gameRulesTitle2}>
                   <ShieldAlert size={35} color="#fc1452" />
