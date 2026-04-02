@@ -7,8 +7,8 @@ type SuccessModalProps = {
   onClose: () => void;
 };
 
-const BASE = '';
-// const BASE = '/achi/questions';
+// const BASE = '';
+const BASE = '/achi/timer';
 
 const FailureModal = ({ onClose }: SuccessModalProps) => {
   return (

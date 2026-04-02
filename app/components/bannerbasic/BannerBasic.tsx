@@ -19,8 +19,8 @@ import styles from './BannerBasic.module.css';
 import SuccessModal from '../SuccessModal/SuccessModal';
 import FailureModal from '../FailureModal/FailureModal';
 
-const BASE = '';
-// const BASE = '/achi/timer';
+// const BASE = '';
+const BASE = '/achi/timer';
 
 const formatTime = (t: number): string => {
   const totalMs = Math.floor(t * 1000);
