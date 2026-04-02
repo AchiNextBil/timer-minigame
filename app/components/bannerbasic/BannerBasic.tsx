@@ -20,13 +20,6 @@ const BASE = '';
 
 // const GAME_END_DATE = new Date('2026-08-19T00:00:00');
 
-// const formatDate = (d: Date): string => {
-//   const day = String(d.getDate()).padStart(2, "0")
-//   const month = MONTHS[d.getMonth()]
-//   const year = d.getFullYear()
-//   return `${day} ${month} ${year}`
-// }
-
 const formatTime = (t: number): string => {
   const totalMs = Math.floor(t * 1000);
   const secs = Math.floor(totalMs / 1000);
@@ -34,17 +27,6 @@ const formatTime = (t: number): string => {
 
   return `${secs}:${ms.toString().padStart(3, '0')}`;
 };
-
-// const formatDate = (d: Date): string => {
-//   return new Intl.DateTimeFormat('zh-CN', {
-//     year: 'numeric',
-//     month: '2-digit',
-//     day: '2-digit',
-//   })
-//     .format(d)
-//     .replace(/\//g, ' 年')
-//     .replace(/(\d{2})$/, ' $1日');
-// };
 
 const BannerBasic = () => {
   const [loading, setLoading] = useState(false);
@@ -59,6 +41,7 @@ const BannerBasic = () => {
   const [time, setTime] = useState<number>(0);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const [errorMsg, setErrorMsg] = useState<string>('');
+  const [resultMessage, setResultMessage] = useState<string>('');
 
   useEffect(() => {
     const isUserAllowed = setTimeout(async () => {
@@ -108,6 +91,19 @@ const BannerBasic = () => {
     }, 99);
   };
 
+  const evaluateResult = (t: number) => {
+    if (t >= 8.8 && t <= 8.9) {
+      if (Math.abs(t - 8.88) < 0.01) return 'perfect timing';
+      return 'well timing';
+    }
+
+    if (t < 8.8) return 'bit fast';
+    if (t > 8.9 && t < 10) return 'bit slow';
+    if (t >= 10) return 'missed it';
+
+    return '';
+  };
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -122,6 +118,9 @@ const BannerBasic = () => {
     if (navigator.vibrate) {
       navigator.vibrate(50);
     }
+
+    const result = evaluateResult(time);
+    setResultMessage(result);
 
     try {
       const res = await fetch('https://clubthreesix.com/giorgi/api-game-2/submit.php', {
@@ -249,6 +248,7 @@ const BannerBasic = () => {
                   <p className={styles.submitText}>{isSubmitted ? 'SUBMITTED' : 'STOP NOW'}</p>
                 </button>
               )}
+              {resultMessage && <p className={styles.resultText}>{resultMessage}</p>}
             </form>
             <div className={styles.card2}>
               <h1 className={styles.gameRulesTitle}>
