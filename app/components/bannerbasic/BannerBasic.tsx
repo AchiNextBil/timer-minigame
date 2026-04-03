@@ -400,7 +400,7 @@ const BannerBasic = () => {
                   <span>Goal:</span> Stop the timer between 8.80 and 9.00 seconds.
                 </h1>
                 <h1 className={styles.gameRulesTitle2}>
-                  <CircleCheckBig size={25} color="#15cb04" />
+                  <CircleCheckBig size={18} color="#15cb04" />
                   <span>Prize:</span> 8.88s = 18+18 CNY &nbsp;·&nbsp; 8.80–8.90s = 18 CNY
                   &nbsp;·&nbsp; 8.90–9.00s = 8 CNY
                 </h1>
