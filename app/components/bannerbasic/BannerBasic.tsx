@@ -23,13 +23,15 @@ import FailureModal from '../FailureModal/FailureModal';
 const BASE = '/achi/timer';
 
 const formatTime = (t: number): string => {
-  const totalMs = Math.floor(t * 1000);
-  const secs = Math.floor(totalMs / 1000);
-  const ms = totalMs % 1000;
-  return `${secs}:${ms.toString().padStart(3, '0')}`;
+  const totalMs = Math.floor(t * 100); // hundredths, not milliseconds
+  const secs = Math.floor(totalMs / 100);
+  const cs = totalMs % 100;
+  return `${secs}:${cs.toString().padStart(2, '0')}`;
 };
 
 const USERNAME_REGEX = /^[A-Za-z0-9]{3,16}$/;
+
+const floorTo2 = (t: number): string => (Math.floor(t * 100) / 100).toFixed(2);
 
 type ResultKey =
   | 'perfect timing'
@@ -292,7 +294,9 @@ const BannerBasic = () => {
                 <p className={styles.daysTitle}>1 try / day</p>
               </div>
               <div className={styles.secondsWrapper}>
-                <h1 className={styles.seconds}>{time.toFixed(2)}</h1>
+                {/* <h1 className={styles.seconds}>{time.toFixed(2)}</h1> */}
+                <h1 className={styles.seconds}>{floorTo2(time)}</h1>
+
                 <p className={styles.secondsText}>seconds</p>
               </div>
               <div className={styles.inputWrapper}>
