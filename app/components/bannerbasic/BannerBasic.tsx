@@ -241,7 +241,7 @@ const BannerBasic = () => {
       {/* HERO */}
       <div className={styles.hero}>
         <Image
-          src={`${BASE}/banner-desk-cn.png`}
+          src={`${BASE}/banner-desk-cn.webp`}
           alt="banner"
           fill
           priority

@@ -368,7 +368,9 @@
 }
 
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .submittingText {
@@ -425,5 +427,15 @@
     left: 50%;
     transform: translateX(-50%);
     padding: 0px 15px;
+  }
+
+  .heroImgDesk {
+    display: none;
+  }
+
+  .heroImgMobi {
+    display: block;
+    object-fit: cover;
+    object-position: top center;
   }
 }
