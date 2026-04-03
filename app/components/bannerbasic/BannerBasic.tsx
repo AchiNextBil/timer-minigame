@@ -45,11 +45,17 @@ type ResultKey =
 interface ResultConfig {
   icon: React.ReactNode;
   color: string;
-  prize: number | null; // CNY prize, null = no prize
+  prize: number | null;
+  prizeLabel?: string;
 }
 
 const RESULT_CONFIG: Record<Exclude<ResultKey, ''>, ResultConfig> = {
-  'perfect timing': { icon: <Trophy size={20} />, color: '#05df72', prize: 36 },
+  'perfect timing': {
+    icon: <Trophy size={20} />,
+    color: '#05df72',
+    prize: 36,
+    prizeLabel: '18 + 18',
+  },
   'well timing': { icon: <Trophy size={20} />, color: '#05df72', prize: 18 },
   'good timing': { icon: <Trophy size={20} />, color: '#ffc74d', prize: 8 },
   'bit fast, try again tomorrow': { icon: <Clock size={20} />, color: '#ff4d4f', prize: null },
@@ -375,7 +381,7 @@ const BannerBasic = () => {
                     </p>
                     {currentConfig.prize !== null && (
                       <p className={styles.resultPrize} style={{ color: currentConfig.color }}>
-                        +{currentConfig.prize} CNY
+                        +{currentConfig.prizeLabel ?? currentConfig.prize} CNY
                       </p>
                     )}
                   </div>
