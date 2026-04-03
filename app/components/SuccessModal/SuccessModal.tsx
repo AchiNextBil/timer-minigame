@@ -31,7 +31,9 @@ const SuccessModal = ({ onClose, prize }: SuccessModalProps) => {
         <div className={styles.content}>
           <Image src={`${BASE}/svg/success-green.svg`} alt="success" width={100} height={100} />
           <h1>{zhCN.submitted}</h1>
-          <h6 className={styles.winnedPrize}>You have won <span style={{fontWeight: 900, }}>{prize ?? '—'} CNY</span></h6>
+          <h6 className={styles.winnedPrize}>
+            You have won <span style={{ fontWeight: 900 }}>{prize ?? '—'} CNY</span>
+          </h6>
         </div>
         <div className={styles.footer}>
           <button
