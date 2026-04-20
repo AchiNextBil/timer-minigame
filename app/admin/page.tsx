@@ -1,9 +1,9 @@
 'use client';
 
 import { useState } from 'react';
-import styles from './downloadData.module.css';
+import styles from './admin.module.css';
 
-const DownloadPage = () => {
+const admin = () => {
   const [date, setDate] = useState('');
 
   const handleDownload = () => {
@@ -38,4 +38,4 @@ const DownloadPage = () => {
   );
 };
 
-export default DownloadPage;
+export default admin;
