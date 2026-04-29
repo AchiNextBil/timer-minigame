@@ -19,8 +19,8 @@ import styles from './BannerBasic.module.css';
 import SuccessModal from '../SuccessModal/SuccessModal';
 import FailureModal from '../FailureModal/FailureModal';
 
-// const BASE = '';
-const BASE = '/achi/timer';
+const BASE = '';
+// const BASE = '/achi/timer';
 
 const formatTime = (t: number): string => {
   const totalMs = Math.floor(t * 100); // hundredths, not milliseconds
@@ -47,6 +47,7 @@ interface ResultConfig {
   color: string;
   prize: number | null;
   prizeLabel?: string;
+  label: string;
 }
 
 const RESULT_CONFIG: Record<Exclude<ResultKey, ''>, ResultConfig> = {
@@ -55,15 +56,37 @@ const RESULT_CONFIG: Record<Exclude<ResultKey, ''>, ResultConfig> = {
     color: '#05df72',
     prize: 36,
     prizeLabel: '18 + 18',
+    label: '完美卡点！',
   },
-  'well timing': { icon: <Trophy size={20} />, color: '#05df72', prize: 18 },
-  'good timing': { icon: <Trophy size={20} />, color: '#ffc74d', prize: 8 },
-  'bit fast, try again tomorrow': { icon: <Clock size={20} />, color: '#ff4d4f', prize: null },
-  'bit slow, try again tomorrow': { icon: <Clock size={20} />, color: '#ff4d4f', prize: null },
+  'well timing': {
+    icon: <Trophy size={20} />,
+    color: '#05df72',
+    prize: 18,
+    label: '很棒！',
+  },
+  'good timing': {
+    icon: <Trophy size={20} />,
+    color: '#ffc74d',
+    prize: 8,
+    label: '还不错！',
+  },
+  'bit fast, try again tomorrow': {
+    icon: <Clock size={20} />,
+    color: '#ff4d4f',
+    prize: null,
+    label: '手速太快了！明天请继续挑战！',
+  },
+  'bit slow, try again tomorrow': {
+    icon: <Clock size={20} />,
+    color: '#ff4d4f',
+    prize: null,
+    label: '手速慢了一点！明天请继续挑战！',
+  },
   'missed it, try again tomorrow': {
     icon: <CircleAlert size={20} />,
     color: '#ff4d4f',
     prize: null,
+    label: '差一点点！明天请继续挑战！',
   },
 };
 
@@ -259,14 +282,14 @@ const BannerBasic = () => {
         </div>
         <div className={styles.greetingWrapper}>
           <div className={styles.titleWrapper}>
-            <h1 className={styles.title}>Win Your </h1>
-            <h1 className={styles.title2}>Freebet!</h1>
+            <h1 className={styles.title}>8.88 秒 </h1>
+            <h1 className={styles.title2}>挑战赢奖金</h1>
           </div>
           <p className={styles.subtitle}>
-            Test your reflexes. Stop the timer at exactly{' '}
-            <span style={{ color: '#CAAB72', fontWeight: 700 }}>8.88</span> seconds to unlock a
-            special casino reward and win a prize.
+            考验手速时刻，在 <span style={{ color: '#CAAB72', fontWeight: 700 }}>8.88</span>{' '}
+            秒精准停表，解锁奖金！
           </p>
+          <p className={styles.subtitleExtra}>前 888 位提交的会员，即可获得奖金！</p>
         </div>
       </div>
 
@@ -293,27 +316,27 @@ const BannerBasic = () => {
             <form className={styles.card} onSubmit={handleSubmit} onKeyDown={handleKeyDown}>
               <div className={styles.titleWrapper}>
                 <Gift color="#CAAB72" size={20} />
-                <p className={styles.challenge}>Freebet Challenge</p>
+                <p className={styles.challenge}>8.88 秒挑战</p>
               </div>
               <div className={styles.daysWrapper}>
                 <Calendar color="#caab72" size={15} />
-                <p className={styles.daysTitle}>1 try / day</p>
+                <p className={styles.daysTitle}>每天仅限 1 次机会</p>
               </div>
               <div className={styles.secondsWrapper}>
                 {/* <h1 className={styles.seconds}>{time.toFixed(2)}</h1> */}
                 <h1 className={styles.seconds}>{floorTo2(time)}</h1>
 
-                <p className={styles.secondsText}>seconds</p>
+                <p className={styles.secondsText}>秒</p>
               </div>
               <div className={styles.inputWrapper}>
-                <label>username</label>
+                <label>用户名</label>
                 <input
                   type="text"
                   inputMode="text"
                   autoComplete="off"
                   autoCapitalize="none"
                   autoCorrect="off"
-                  placeholder="enter your username"
+                  placeholder="请输入用户名"
                   value={username || ''}
                   maxLength={16}
                   className={showUsernameError ? styles.inputError : ''}
@@ -333,10 +356,10 @@ const BannerBasic = () => {
                 )}
                 {errorMsg && <span className={styles.errorText}>{errorMsg}</span>}
                 {checkingAllowence && (
-                  <span className={styles.checkingText}>checkingAllowence...</span>
+                  <span className={styles.checkingText}>正在确认是否已参与今日挑战...</span>
                 )}
                 {allowedToPlay === false && (
-                  <span className={styles.errorText}>you already played today</span>
+                  <span className={styles.errorText}>今日您的次数已用完，明天请继续挑战！</span>
                 )}
               </div>
 
@@ -349,10 +372,10 @@ const BannerBasic = () => {
                     disabled={isStartDisabled}
                   >
                     <Play size={21} fill="#ffffff" stroke="none" />
-                    <p className={styles.submitText}>START TIMER</p>
+                    <p className={styles.submitText}>点击开始计时</p>
                   </button>
                   {!isUsernameValid && username.length === 0 && (
-                    <p className={styles.startHint}>Enter your username to start</p>
+                    <p className={styles.startHint}>请输入用户名开始挑战</p>
                   )}
                 </>
               )}
@@ -360,14 +383,14 @@ const BannerBasic = () => {
               {time > 0 && !isSubmitting && !isSubmitted && (
                 <button type="submit" className={styles.submitButton} disabled={isSubmitted}>
                   <Square size={21} fill="#ffffff" stroke="none" />
-                  <p className={styles.submitText}>STOP NOW</p>
+                  <p className={styles.submitText}>停止计时</p>
                 </button>
               )}
 
               {isSubmitting && (
                 <div className={styles.submittingWrapper}>
                   <div className={styles.submittingSpinner} />
-                  <p className={styles.submittingText}>Saving your result...</p>
+                  <p className={styles.submittingText}>正在保存成绩…</p>
                 </div>
               )}
 
@@ -377,11 +400,11 @@ const BannerBasic = () => {
                   {currentConfig.icon}
                   <div className={styles.resultTextWrapper}>
                     <p className={styles.resultText} style={{ color: currentConfig.color }}>
-                      {resultMessage}
+                      {currentConfig.label}
                     </p>
                     {currentConfig.prize !== null && (
                       <p className={styles.resultPrize} style={{ color: currentConfig.color }}>
-                        +{currentConfig.prizeLabel ?? currentConfig.prize} CNY
+                        +{currentConfig.prizeLabel ?? currentConfig.prize} 元
                       </p>
                     )}
                   </div>
@@ -392,23 +415,22 @@ const BannerBasic = () => {
             <div className={styles.card2}>
               <h1 className={styles.gameRulesTitle}>
                 <Book size={20} color="#ffa30f" />
-                How to Play & Terms
+                玩法说明
               </h1>
               <div className={styles.gameRulesWrapper}>
                 <h1 className={styles.gameRulesTitle2}>
                   <Clock size={20} color="#784ff3" />
-                  <span>Goal:</span> Stop the timer between 8.80 and 9.00 seconds.
+                  <span>目标：</span> 在 8.80秒 - 9.00 秒之间，并按下停止计时器
                 </h1>
                 <h1 className={styles.gameRulesTitle2}>
                   <CircleCheckBig size={18} color="#15cb04" />
-                  <span>Prize:</span> 8.88s = 18+18 CNY &nbsp;·&nbsp; 8.80–8.90s = 18 CNY
-                  &nbsp;·&nbsp; 8.90–9.00s = 8 CNY
+                  <span>奖金：</span> 8.88 秒 = 18 元 + 18 元 &nbsp;·&nbsp; 8.80 – 8.90 秒 = 18 元
+                  &nbsp;·&nbsp; 8.90 – 9.00 秒 = 8 元
                 </h1>
                 <h1 className={styles.gameRulesTitle2}>
-                  <ShieldAlert size={35} color="#fc1452" />
-                  <span>Terms:</span> One prize per player. Must be 18+ to play. The prize is
-                  non-transferable and subject to standard wagering requirements. Attempts are
-                  unlimited!
+                  <ShieldAlert size={20} color="#fc1452" />
+                  <span>活动规则：</span>用户每天仅限 1 次机会 当天至少需要存款 100 元
+                  奖金需流水要求
                 </h1>
               </div>
             </div>

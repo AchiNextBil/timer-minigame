@@ -76,7 +76,7 @@
 .content h6 {
   color: #222939;
   text-transform: uppercase;
-  font-size: 14px;
+  font-size: 22px;
   font-weight: 400;
   text-align: center;
 }
@@ -116,6 +116,7 @@
   transition-duration: 300ms;
 }
 
-.winnedPrize{
-  font-size: 26px;
+
+.additionalText{
+  font-size: 14px;
 }

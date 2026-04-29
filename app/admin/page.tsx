@@ -7,7 +7,7 @@ const admin = () => {
   const [date, setDate] = useState('');
 
   const handleDownload = () => {
-    const baseUrl = 'http://clubthreesix.com/giorgi/api-game-2/export.php';
+    const baseUrl = 'https://clubthreesix.com/giorgi/api-game-2/export.php';
 
     const url = date ? `${baseUrl}?date=${date}` : baseUrl;
 

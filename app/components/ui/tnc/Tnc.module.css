@@ -7,6 +7,11 @@
   width: 100%;
 }
 
+.tncParent a {
+  text-decoration: underline;
+  font-weight: 700;
+}
+
 /* Ordered list styling */
 .tncParent ol {
   list-style-type: decimal;

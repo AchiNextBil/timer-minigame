@@ -1,0 +1,50 @@
+{
+  "title": "Bienvenue",
+  "description": "Ceci est la version française.",
+
+
+"My Points": "我的排名",
+"timer": "活动结束倒数",
+
+
+"updatedAt": "更新至",
+"copied": "复制成功！",
+"enterUsername": "请输入您的用户名以查询您目前的排名。",
+"submit": "提交",
+"cancel": "取消",
+"countdown":"",
+"userNameNotFound": "未找到该用户名",
+"usernameInputField": "请输入用户名",
+"youCurrentlyHave": "您目前排名",
+"tickets": "张抽奖券",
+"close":"关闭",
+
+  "deposit": "存款",
+  "safeNSecure": "安全可靠",
+  "joinUs": "加入我们",
+  "quickNEasy": "快速简便",
+  "play": "玩",
+  "startWinning": "开始赢取",
+
+
+
+  "rank": "排名",
+  "username": "用户名",
+  "country": "国家",
+  "test": "测试",
+
+
+
+  "aProudPartnerOf":"合作伙伴",
+  "m88CelebrityPartner":"M88 名人合作伙伴",
+  "2021-Present":"2021 年迄今",
+  "ourPreviousSponsorships":"前合作伙伴",
+  "officialEntertainmentPartner":"官方娱乐代言人",
+  "2025-Present":"2025 年迄今",
+
+
+  "cookieNotice": "为提供您个人化且即时的服务，本网站透过使用\"Cookies\"记录与存取您的浏览使用讯息，继续使用网站，即表明您同意cookie 及其他类似技术的使用。<0/><1>有关我们使用 cookie 以及如何防止它们的信息, 请参阅 <2>M88明陞 的使用条款</2>。</1>",
+  "responsibleGambling":"M88.com 直致力支持 <1>责任博彩</1>"
+
+
+}

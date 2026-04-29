@@ -1,17 +1,16 @@
-import { useTranslation } from 'react-i18next';
-import { Trans } from 'react-i18next';
-import styles from './Footer.module.css';
-import laLiga from '../../../public/footer/la-liga.svg';
+import { Trans, useTranslation } from 'react-i18next';
+import svg18 from '../../../public/footer/18.svg';
 import acm from '../../../public/footer/acm.svg';
 import afc from '../../../public/footer/afc.svg';
 import cp from '../../../public/footer/cp.svg';
+import fwm from '../../../public/footer/fly-with-me.svg';
+import ga from '../../../public/footer/ga.svg';
+import itech from '../../../public/footer/itech.svg';
+import laLiga from '../../../public/footer/la-liga.svg';
 import man from '../../../public/footer/man.svg';
 import th from '../../../public/footer/th.svg';
-import fwm from '../../../public/footer/fly-with-me.svg';
 import vanuatu from '../../../public/footer/vanuatu.svg';
-import itech from '../../../public/footer/itech.svg';
-import ga from '../../../public/footer/ga.svg';
-import svg18 from '../../../public/footer/18.svg';
+import styles from './Footer.module.css';
 
 // Define language-specific links
 const termsLinks = {

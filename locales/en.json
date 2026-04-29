@@ -1,0 +1,42 @@
+{
+"title": "Bienvenue",
+"description": "This is the French version.",
+
+"My Points": "MY RANKING",
+"updatedAt": "Updated at",
+"enterUsername" : "Please enter your username to check your current ranking",
+"submit": "MY RANKING",
+"cancel": "cancel",
+"userNameNotFound": "username not found",
+"close":"close",
+"timer": "Countdown till",
+"copied": "copied!",
+"youCurrentlyHave": "Your current rank",
+"tickets": "tickets",
+
+"deposit": "Deposit",
+"safeNSecure": "Safe and Secure",
+"joinUs": "Join Us",
+"quickNEasy": "Quick and Easy",
+"play": "Play",
+"startWinning": "Start Winning",
+
+"rank": "Rank",
+"username": "Username",
+"usernameInputField": "Please enter your username",
+"country": "Country",
+"test": "Test",
+
+"aProudPartnerOf":"Partner",
+"m88CelebrityPartner":"M88 Celebrity Partner",
+"2021-Present":"2021 Year-to-Date",
+"ourPreviousSponsorships":"Previous Partners",
+"officialEntertainmentPartner":"Official Entertainment Partner",
+"2025-Present":"2025 - Present",
+
+  "cookieNotice": "M88.com uses certain browser cookies to ensure you receive the best gaming experience. <0/><1>By accessing and continuing to use the site you accept the use of these cookies. For information on our use of cookies and how to prevent them please refer to M88´s<2> terms of use.</2></1>",
+
+  "responsibleGambling": "M88 is committed to supportingasd asd as <1>Responsible Gaming</1>."
+
+
+}

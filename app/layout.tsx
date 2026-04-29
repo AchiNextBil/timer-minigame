@@ -12,8 +12,8 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: 'GRAND CAMPAIGN LEADERBOARD',
-  description: 'GRAND CAMPAIGN LEADERBOARD',
+  title: '8.88 秒	挑战赢奖金 - 2026 年世界杯热血小游戏',
+  description: '8.88 秒	挑战赢奖金 - 2026 年世界杯热血小游戏',
   icons: {
     icon: '/favicon.png',
   },
