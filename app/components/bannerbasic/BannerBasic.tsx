@@ -149,14 +149,16 @@ const BannerBasic = () => {
   }, []);
 
   const evaluateResult = (t: number): ResultKey => {
-    if (t >= 8.8 && t < 8.9) {
-      if (Math.abs(t - 8.88) < 0.01) return 'perfect timing';
+    const floored = Math.floor(t * 100) / 100;
+
+    if (floored >= 8.8 && floored < 8.9) {
+      if (floored === 8.88) return 'perfect timing';
       return 'well timing';
     }
-    if (t >= 8.9 && t < 9.0) return 'good timing';
-    if (t < 8.8) return 'bit fast, try again tomorrow';
-    if (t >= 9.0 && t < 10) return 'bit slow, try again tomorrow';
-    if (t >= 10) return 'missed it, try again tomorrow';
+    if (floored >= 8.9 && floored < 9.0) return 'good timing';
+    if (floored < 8.8) return 'bit fast, try again tomorrow';
+    if (floored >= 9.0 && floored < 10) return 'bit slow, try again tomorrow';
+    if (floored >= 10) return 'missed it, try again tomorrow';
     return '';
   };
 
@@ -263,13 +265,16 @@ const BannerBasic = () => {
 
       {/* HERO */}
       <div className={styles.hero}>
-        <Image
-          src={`${BASE}/banner-desk-cn.webp`}
-          alt="banner"
-          fill
-          priority
-          className={styles.heroImgDesk}
-        />
+        <div className={styles.heroInner}>
+          {' '}
+          <Image
+            src={`${BASE}/banner-desk-cn.webp`}
+            alt="banner"
+            fill
+            priority
+            className={styles.heroImgDesk}
+          />
+        </div>
         <Image
           src={`${BASE}/banner-mobi-cn.webp`}
           alt="banner"

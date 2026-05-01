@@ -10,6 +10,15 @@
   overflow: hidden;
 }
 
+.heroInner {
+  position: absolute;
+  inset: 0;
+  max-width: 1440px;
+  width: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
 .heroImgDesk {
   display: block;
   object-fit: cover;
