@@ -19,8 +19,16 @@ import styles from './BannerBasic.module.css';
 import SuccessModal from '../SuccessModal/SuccessModal';
 import FailureModal from '../FailureModal/FailureModal';
 
+const GAME_END_DATE = new Date('2026-08-17T00:00:00');
+const GAME_START_DATE = new Date('2026-04-04T00:00:00');
 const BASE = '';
 // const BASE = '/achi/timer';
+
+const getToday = (): Date => {
+  const d = new Date();
+  d.setHours(0, 0, 0, 0);
+  return d;
+};
 
 const formatTime = (t: number): string => {
   const totalMs = Math.floor(t * 100); // hundredths, not milliseconds
@@ -96,6 +104,7 @@ const isWin = (result: ResultKey) =>
 const BannerBasic = () => {
   const [loading, setLoading] = useState(false);
   const [gameFinished, setGameFinished] = useState(false);
+  const [gameNotStarted, setGameNotStarted] = useState(false);
   const [username, setUsername] = useState<string>('');
   const [usernameTouched, setUsernameTouched] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -115,6 +124,14 @@ const BannerBasic = () => {
 
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [showFailureModal, setShowFailureModal] = useState(false);
+
+  useEffect(() => {
+    const todayNorm = getToday();
+    GAME_END_DATE.setHours(0, 0, 0, 0);
+    GAME_START_DATE.setHours(0, 0, 0, 0);
+    if (todayNorm >= GAME_END_DATE) setGameFinished(true);
+    if (todayNorm < GAME_START_DATE) setGameNotStarted(true);
+  }, []);
 
   useEffect(() => {
     const isUserAllowed = setTimeout(async () => {
@@ -303,7 +320,7 @@ const BannerBasic = () => {
           <Spinner />
         </div>
       ) : gameFinished ? (
-        <div>
+        <div className={styles.gameFinished}>
           <div>
             <Image
               src={`${BASE}/svg/success.svg`}
