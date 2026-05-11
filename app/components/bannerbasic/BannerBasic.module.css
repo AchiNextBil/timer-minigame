@@ -66,7 +66,7 @@
 }
 
 .gameFinishedTitle {
-  font-size: 34px;
+  font-size: clamp(18px, 5vw, 26px);
   font-weight: 700;
 }
 
@@ -512,10 +512,10 @@
     height: auto;
   }
 
-  .gameFinishedTitle {
+  /* .gameFinishedTitle {
     font-size: 22px;
     text-align: center;
-  }
+  } */
 
   .gameFinishedSub {
     font-size: 14px;

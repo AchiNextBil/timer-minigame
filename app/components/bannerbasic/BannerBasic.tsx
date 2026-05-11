@@ -327,19 +327,21 @@ const BannerBasic = () => {
           <Spinner />
         </div>
       ) : gameNotStarted ? (
-        <div className={styles.content}>
-          <div className={styles.gameFinishedBlock}>
-            <Image
-              src={`${BASE}/svg/success.svg`}
-              alt="coming soon"
-              width={48}
-              height={48}
-              className={styles.whiteIcon}
-            />
-            <h2 className={styles.gameFinishedTitle}>敬请期待</h2>
-            <h2 className={styles.gameFinishedTitle}>发布日期：2026年6月22日 00:00:00</h2>
+        <>
+          <div className={styles.content}>
+            <div className={styles.gameFinishedBlock}>
+              <Image
+                src={`${BASE}/svg/success.svg`}
+                alt="coming soon"
+                width={48}
+                height={48}
+                className={styles.whiteIcon}
+              />
+              <h2 className={styles.gameFinishedTitle}>敬请期待</h2>
+              <h2 className={styles.gameFinishedTitle}>发布日期：2026年6月22日 00:00:00</h2>
+            </div>
           </div>
-        </div>
+        </>
       ) : gameFinished ? (
         <div className={styles.content}>
           <div className={styles.gameFinishedBlock}>
