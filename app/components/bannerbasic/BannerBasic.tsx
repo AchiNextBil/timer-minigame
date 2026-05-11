@@ -21,8 +21,8 @@ import FailureModal from '../FailureModal/FailureModal';
 
 const GAME_END_DATE = new Date('2026-08-17T00:00:00');
 const GAME_START_DATE = new Date('2026-04-04T00:00:00');
-const BASE = '';
-// const BASE = '/achi/timer';
+// const BASE = '';
+const BASE = '/achi/timer';
 
 const getToday = (): Date => {
   const d = new Date();
