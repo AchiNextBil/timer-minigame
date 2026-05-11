@@ -116,7 +116,8 @@
   transition-duration: 300ms;
 }
 
-
-.additionalText{
-  font-size: 14px;
+.content .additionalText {
+  font-size: clamp(8px, 2.5vw, 16px);
+  text-align: center;
+  width: 100%;
 }
