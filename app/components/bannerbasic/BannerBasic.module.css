@@ -6,7 +6,7 @@
 .hero {
   position: relative;
   width: 100%;
-  height: clamp(400px, 52vw, 750px);
+  height: clamp(400px, 52vw, 700px);
   overflow: hidden;
 }
 
@@ -43,6 +43,31 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.gameFinishedBlock {
+  max-height: 200px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  color: white;
+}
+
+.whiteIcon {
+  filter: brightness(0) invert(1);
+}
+
+.gameFinishedTitle {
+  font-size: 34px;
+  font-weight: 700;
 }
 
 .gameWrapper {
@@ -94,7 +119,7 @@
 }
 
 .title {
-  font-size: clamp(28px, 5vw, 64px);
+  font-size: clamp(28px, 5vw, 46px);
   font-weight: 800;
   background: linear-gradient(to right, #ffffff, #e2e8f0, #90a1b9);
   -webkit-background-clip: text;
@@ -103,7 +128,7 @@
 }
 
 .title2 {
-  font-size: clamp(28px, 5vw, 64px);
+  font-size: clamp(28px, 5vw, 46px);
   font-weight: 800;
   background: linear-gradient(to right, #caab72, #927134);
   -webkit-background-clip: text;
@@ -113,7 +138,7 @@
 
 .subtitle {
   font-weight: 400;
-  font-size: clamp(12px, 3.5vw, 18px);
+  font-size: clamp(12px, 3.5vw, 16px);
   letter-spacing: 0.5px;
   text-align: center;
   color: #eaebed;
@@ -479,5 +504,15 @@
     transform: translateX(-50%);
     width: 70px;
     height: auto;
+  }
+
+  .gameFinishedTitle {
+    font-size: 22px;
+    text-align: center;
+  }
+
+  .gameFinishedSub {
+    font-size: 14px;
+    text-align: center;
   }
 }

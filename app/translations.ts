@@ -26,7 +26,7 @@ const zhCN = {
   submitting: '提交中',
   submitted: '提交成功',
   success: '成功',
-  mainPage: '首页',
+  mainPage: '好',
   click: '点击',
   history: '历史答题记录',
   answerHistory: '答题记录',

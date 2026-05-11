@@ -32,7 +32,7 @@ const FailureModal = ({ onClose }: SuccessModalProps) => {
           <h1>{zhCN.submitted}</h1>
           <h6>差点就卡点了！明天请再来挑战！</h6>
           <p className={styles.additionalText}>
-            前 888 位提交的会员，并完成当日存款至少 100 元，经审核通过后，奖金将在每日审核后 3
+            前 888 位提交的会员，并完成当日存款至少 888 元，经审核通过后，奖金将在每日审核后 3
             天内派发。
           </p>
         </div>

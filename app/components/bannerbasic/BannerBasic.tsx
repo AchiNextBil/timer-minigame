@@ -231,7 +231,13 @@ const BannerBasic = () => {
     setTime(0);
 
     const tick = (now: number) => {
-      const elapsed = (now - startTimeRef.current) / 1000;
+      const SPEED_MULTIPLIER = 1.15;
+
+      const elapsed = ((now - startTimeRef.current) / 1000) * SPEED_MULTIPLIER;
+
+      //the normal 1.0x speed
+      // const elapsed = (now - startTimeRef.current) / 1000;
+
       timeRef.current = elapsed;
       setTime(elapsed);
 
@@ -319,9 +325,23 @@ const BannerBasic = () => {
         <div className={styles.contentWrapper}>
           <Spinner />
         </div>
+      ) : gameNotStarted ? (
+        <div className={styles.content}>
+          <div className={styles.gameFinishedBlock}>
+            <Image
+              src={`${BASE}/svg/success.svg`}
+              alt="coming soon"
+              width={48}
+              height={48}
+              className={styles.whiteIcon}
+            />
+            <h2 className={styles.gameFinishedTitle}>敬请期待</h2>
+            <h2 className={styles.gameFinishedTitle}>发布日期：2026年6月22日 00:00:00</h2>
+          </div>
+        </div>
       ) : gameFinished ? (
-        <div className={styles.gameFinished}>
-          <div>
+        <div className={styles.content}>
+          <div className={styles.gameFinishedBlock}>
             <Image
               src={`${BASE}/svg/success.svg`}
               alt="finished"
@@ -329,7 +349,7 @@ const BannerBasic = () => {
               height={48}
               className={styles.whiteIcon}
             />
-            <h2>活动已结束</h2>
+            <h2 className={styles.gameFinishedTitle}>游戏结束了</h2>
           </div>
         </div>
       ) : (
