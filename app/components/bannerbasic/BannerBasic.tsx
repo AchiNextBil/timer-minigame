@@ -310,8 +310,9 @@ const BannerBasic = () => {
         </div>
         <div className={styles.greetingWrapper}>
           <div className={styles.titleWrapper}>
-            <h1 className={styles.title}>8.88 秒 </h1>
-            <h1 className={styles.title2}>挑战赢奖金</h1>
+            {/* <h1 className={styles.title}>8.88 秒 </h1>
+            <h1 className={styles.title2}>挑战赢奖金</h1> */}
+            <h1 className={styles.titleTest}>8.88秒 挑战赢奖金</h1>
           </div>
           <p className={styles.subtitle}>
             考验手速时刻，在 <span style={{ color: '#CAAB72', fontWeight: 700 }}>8.88</span>{' '}

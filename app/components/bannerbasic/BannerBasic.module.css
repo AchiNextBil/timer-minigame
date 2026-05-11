@@ -126,6 +126,12 @@
   -webkit-text-fill-color: transparent;
   text-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
+.titleTest {
+  font-size: clamp(28px, 5vw, 40px);
+  font-weight: 700;
+  color: #caab72;
+  letter-spacing: 2px;
+}
 
 .title2 {
   font-size: clamp(28px, 5vw, 46px);
