@@ -124,6 +124,20 @@ const BannerBasic = () => {
 
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [showFailureModal, setShowFailureModal] = useState(false);
+  const [gameDisabled, setGameDisabled] = useState(false);
+
+  useEffect(() => {
+    const fetchStatus = async () => {
+      try {
+        const res = await fetch('https://clubthreesix.com/giorgi/api-game-2/get-status.php');
+        const data = await res.json();
+        setGameDisabled(data?.data?.is_disabled === true);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    fetchStatus();
+  }, []);
 
   useEffect(() => {
     const todayNorm = getToday();
@@ -309,10 +323,10 @@ const BannerBasic = () => {
           <Image src={`${BASE}/m88-logo-cn-desk.svg`} alt="logo" width={100} height={40} />
         </div>
         <div className={styles.greetingWrapper}>
+          <h1 className={styles.titleTest}>2026 年世界杯热血小游戏</h1>
           <div className={styles.titleWrapper}>
-            {/* <h1 className={styles.title}>8.88 秒 </h1>
-            <h1 className={styles.title2}>挑战赢奖金</h1> */}
-            <h1 className={styles.titleTest}>8.88秒 挑战赢奖金</h1>
+            <h1 className={styles.title}>8.88 秒 </h1>
+            <h1 className={styles.title2}>挑战赢奖金</h1>
           </div>
           <p className={styles.subtitle}>
             考验手速时刻，在 <span style={{ color: '#CAAB72', fontWeight: 700 }}>8.88</span>{' '}
@@ -326,6 +340,19 @@ const BannerBasic = () => {
         <div className={styles.contentWrapper}>
           <Spinner />
         </div>
+      ) : gameDisabled ? (
+        <div className={styles.content}>
+          <div className={styles.gameFinishedBlock}>
+            <Image
+              src={`${BASE}/svg/big-timer.svg`}
+              alt="finished"
+              width={48}
+              height={48}
+              className={styles.whiteIcon}
+            />
+            <h2 className={styles.gameFinishedTitle}>已完全达到</h2>
+          </div>
+        </div>
       ) : gameNotStarted ? (
         <>
           <div className={styles.content}>
@@ -338,7 +365,7 @@ const BannerBasic = () => {
                 className={styles.whiteIcon}
               />
               <h2 className={styles.gameFinishedTitle}>敬请期待</h2>
-              <h2 className={styles.gameFinishedTitle}>发布日期：2026年6月22日 00:00:00</h2>
+              <h2 className={styles.gameFinishedTitle}>发布日期：2026 年 06 月 22 日 00:00:00</h2>
             </div>
           </div>
         </>
