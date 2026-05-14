@@ -350,7 +350,7 @@ const BannerBasic = () => {
               height={48}
               className={styles.whiteIcon}
             />
-            <h2 className={styles.gameFinishedTitle}>已完全达到</h2>
+            <h2 className={styles.gameFinishedTitle}>今日名额已满，请明天再来。</h2>
           </div>
         </div>
       ) : gameNotStarted ? (
