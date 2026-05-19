@@ -19,16 +19,51 @@ import styles from './BannerBasic.module.css';
 import SuccessModal from '../SuccessModal/SuccessModal';
 import FailureModal from '../FailureModal/FailureModal';
 
-const GAME_END_DATE = new Date('2026-08-17T00:00:00');
-const GAME_START_DATE = new Date('2026-04-04T00:00:00');
 const BASE = '';
 // const BASE = '/achi/timer';
 
+const CHINA_TIMEZONE = 'Asia/Shanghai';
+
+const getChinaDate = () => {
+  return new Date(
+    new Date().toLocaleString('en-US', {
+      timeZone: CHINA_TIMEZONE,
+    }),
+  );
+};
+
 const getToday = (): Date => {
-  const d = new Date();
+  const d = getChinaDate();
   d.setHours(0, 0, 0, 0);
   return d;
 };
+
+const createChinaDate = (
+  year: number,
+  month: number,
+  day: number,
+  hour = 0,
+  minute = 0,
+  second = 0,
+) => {
+  return new Date(
+    new Date(
+      `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(
+        2,
+        '0',
+      )} ${String(hour).padStart(2, '0')}:${String(minute).padStart(
+        2,
+        '0',
+      )}:${String(second).padStart(2, '0')}`,
+    ).toLocaleString('en-US', {
+      timeZone: CHINA_TIMEZONE,
+    }),
+  );
+};
+
+// Game #2 (China dates)
+const GAME_START_DATE = createChinaDate(2026, 6, 22);
+const GAME_END_DATE = createChinaDate(2026, 7, 20);
 
 const formatTime = (t: number): string => {
   const totalMs = Math.floor(t * 100); // hundredths, not milliseconds
@@ -141,10 +176,14 @@ const BannerBasic = () => {
 
   useEffect(() => {
     const todayNorm = getToday();
-    GAME_END_DATE.setHours(0, 0, 0, 0);
-    GAME_START_DATE.setHours(0, 0, 0, 0);
-    if (todayNorm >= GAME_END_DATE) setGameFinished(true);
-    if (todayNorm < GAME_START_DATE) setGameNotStarted(true);
+
+    if (todayNorm >= GAME_END_DATE) {
+      setGameFinished(true);
+    }
+
+    if (todayNorm < GAME_START_DATE) {
+      setGameNotStarted(true);
+    }
   }, []);
 
   useEffect(() => {
