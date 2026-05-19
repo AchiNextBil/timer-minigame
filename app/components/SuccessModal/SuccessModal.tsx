@@ -8,8 +8,8 @@ type SuccessModalProps = {
   prize?: number | null;
 };
 
-// const BASE = '';
-const BASE = '/achi/timer';
+const BASE = '';
+// const BASE = '/achi/timer';
 
 const SuccessModal = ({ onClose, prize }: SuccessModalProps) => {
   return (

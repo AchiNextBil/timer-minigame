@@ -74,10 +74,10 @@
   width: 100%;
   padding-top: 0px;
   padding-bottom: 20px;
-  background-image:
-    linear-gradient(rgba(33, 41, 59, 1), rgba(35, 41, 57, 0.9)), url('/achi/timer/game-banner.webp');
   /* background-image:
-    linear-gradient(rgba(33, 41, 59, 1), rgba(35, 41, 57, 0.9)), url('/game-banner.webp'); */
+    linear-gradient(rgba(33, 41, 59, 1), rgba(35, 41, 57, 0.9)), url('/achi/timer/game-banner.webp'); */
+  background-image:
+    linear-gradient(rgba(33, 41, 59, 1), rgba(35, 41, 57, 0.9)), url('/game-banner.webp');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

@@ -10,7 +10,7 @@ const admin = () => {
   const [toggling, setToggling] = useState(false);
 
   useEffect(() => {
-    fetch('https://clubthreesix.com/giorgi/api-game-2/get-status.php')
+    fetch('https://972357.com/api/get-status.php')
       .then((r) => r.json())
       .then((d) => setIsDisabled(d?.data?.is_disabled === true))
       .finally(() => setLoading(false));
@@ -18,7 +18,7 @@ const admin = () => {
 
   const handleToggle = async () => {
     setToggling(true);
-    const res = await fetch('https://clubthreesix.com/giorgi/api-game-2/toggle-status.php', {
+    const res = await fetch('https://972357.com/api/toggle-status.php', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ disable: !isDisabled }),
@@ -29,7 +29,7 @@ const admin = () => {
   };
 
   const handleDownload = () => {
-    const baseUrl = 'https://clubthreesix.com/giorgi/api-game-2/export.php';
+    const baseUrl = 'https://972357.com/api/export.php';
 
     const url = date ? `${baseUrl}?date=${date}` : baseUrl;
 

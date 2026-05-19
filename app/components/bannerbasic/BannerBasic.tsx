@@ -21,8 +21,8 @@ import FailureModal from '../FailureModal/FailureModal';
 
 const GAME_END_DATE = new Date('2026-08-17T00:00:00');
 const GAME_START_DATE = new Date('2026-04-04T00:00:00');
-// const BASE = '';
-const BASE = '/achi/timer';
+const BASE = '';
+// const BASE = '/achi/timer';
 
 const getToday = (): Date => {
   const d = new Date();
@@ -129,7 +129,7 @@ const BannerBasic = () => {
   useEffect(() => {
     const fetchStatus = async () => {
       try {
-        const res = await fetch('https://clubthreesix.com/giorgi/api-game-2/get-status.php');
+        const res = await fetch('https://972357.com/api/get-status.php');
         const data = await res.json();
         setGameDisabled(data?.data?.is_disabled === true);
       } catch (err) {
@@ -152,7 +152,7 @@ const BannerBasic = () => {
       try {
         if (!username?.trim()) return;
         setCheckingAllowence(true);
-        const res = await fetch('https://clubthreesix.com/giorgi/api-game-2/check.php', {
+        const res = await fetch('https://972357.com/api/check.php', {
           headers: { 'Content-Type': 'application/json' },
           method: 'POST',
           body: JSON.stringify({ username: username.trim() }),
@@ -210,7 +210,7 @@ const BannerBasic = () => {
     setPrize(null);
 
     try {
-      const res = await fetch('https://clubthreesix.com/giorgi/api-game-2/submit.php', {
+      const res = await fetch('https://972357.com/api/submit.php', {
         headers: { 'Content-Type': 'application/json' },
         method: 'POST',
         body: JSON.stringify({ username: username?.trim(), result: formatTime(finalTime) }),
