@@ -359,7 +359,7 @@ const BannerBasic = () => {
           className={styles.heroImgMobi}
         />
         <div className={styles.logoWrapper}>
-          <Image src={`${BASE}/m88-logo-cn-desk.svg`} alt="logo" width={100} height={40} />
+          <Image src={`${BASE}/m88-logo-cn-desk.svg`} alt="logo" width={200} height={90} />
         </div>
         <div className={styles.greetingWrapper}>
           <h1 className={styles.titleTest}>2026 年世界杯热血小游戏</h1>
